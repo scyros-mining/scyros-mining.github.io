@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scyros: reproducible mining of GitHub repositories</title>
+<meta name="description" content="Scyros is a framework for sound, reproducible and scalable studies of public GitHub repositories.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/css/site.css">
+<script src="assets/js/site.js"></script>
+</head>
+<body>
+
+<!-- #include header current="home" -->
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap site-head__inner">
+    <a class="brand" href="index.html">
+      <img src="assets/logo/neutral.svg" alt="" width="34" height="25">
+      <span>Scyros</span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="docs.html">Docs</a>
+      <a href="study.html">Study</a>
+    </nav>
+    <div class="site-head__tools">
+      <button class="icon-button theme-toggle" type="button" aria-label="Switch colour theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <a class="icon-button" href="https://github.com/fxpl/scyros" aria-label="Scyros on GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48l-.01-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85l-.01 2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+<!-- /include -->
+
+<main id="main">
+
+  <section class="hero wrap">
+    <img class="hero__logo" src="assets/logo/neutral.svg" alt="" width="240" height="177">
+    <h1>Scyros</h1>
+    <p class="hero__tagline">Sound, reproducible and scalable studies of GitHub repositories.</p>
+    <p class="hero__intro">
+      Scyros samples public repositories on GitHub, filters them, downloads
+      their code at a fixed commit and extracts the functions you want to
+      study. It is a command-line tool written in Rust, built so that other
+      researchers can repeat your study and get the same data.
+    </p>
+  </section>
+
+  <section class="section wrap" aria-labelledby="get-started">
+    <div class="install">
+      <h2 id="get-started">Get started</h2>
+      <p class="muted">Paste the following into a terminal:</p>
+
+      <div data-tabs>
+        <div class="tabs__list" role="tablist" aria-label="Installation method">
+          <button type="button" role="tab" id="tab-unix" aria-controls="panel-unix">macOS and Linux</button>
+          <button type="button" role="tab" id="tab-windows" aria-controls="panel-windows">Windows</button>
+          <button type="button" role="tab" id="tab-cargo" aria-controls="panel-cargo">Cargo</button>
+          <button type="button" role="tab" id="tab-nix" aria-controls="panel-nix">Nix</button>
+        </div>
+
+        <div role="tabpanel" id="panel-unix" aria-labelledby="tab-unix">
+          <p class="tabs__label">macOS and Linux</p>
+          <div class="code">
+            <pre>curl --proto '=https' --tlsv1.2 -LsSf https://github.com/fxpl/scyros/releases/latest/download/scyros-installer.sh | sh</pre>
+            <button class="copy-btn" type="button">Copy</button>
+          </div>
+        </div>
+        <div role="tabpanel" id="panel-windows" aria-labelledby="tab-windows">
+          <p class="tabs__label">Windows (PowerShell)</p>
+          <div class="code">
+            <pre>powershell -ExecutionPolicy Bypass -c "irm https://github.com/fxpl/scyros/releases/latest/download/scyros-installer.ps1 | iex"</pre>
+            <button class="copy-btn" type="button">Copy</button>
+          </div>
+        </div>
+        <div role="tabpanel" id="panel-cargo" aria-labelledby="tab-cargo">
+          <p class="tabs__label">Cargo (needs Rust 1.93 or newer)</p>
+          <div class="code">
+            <pre>cargo install scyros</pre>
+            <button class="copy-btn" type="button">Copy</button>
+          </div>
+        </div>
+        <div role="tabpanel" id="panel-nix" aria-labelledby="tab-nix">
+          <p class="tabs__label">Nix (with flakes enabled)</p>
+          <div class="code">
+            <pre>nix profile install github:fxpl/scyros</pre>
+            <button class="copy-btn" type="button">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <p class="install__next">
+        Then run <code>scyros --help</code>. New to Scyros? Follow the
+        <a href="https://github.com/fxpl/scyros-tutorial">tutorial</a> or read the
+        <a href="docs.html">docs</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section wrap" aria-labelledby="research">
+    <div class="section__head">
+      <h2 id="research">Research</h2>
+      <p>Studies that use Scyros.</p>
+    </div>
+    <a class="card publication" href="study.html">
+      <p class="venue">OOPSLA 2026</p>
+      <h3>Floating-Point Usage on GitHub: A Large-Scale Study of Statically Typed Languages</h3>
+      <p>
+        The study Scyros was built for. It measured how floating-point
+        arithmetic is used in 447,209 projects, and released a dataset of
+        almost ten million floating-point functions.
+      </p>
+      <p class="card__more">Statistics, dataset and benchmarks &rarr;</p>
+    </a>
+  </section>
+
+  <section class="section wrap" aria-labelledby="cite">
+    <div class="cite">
+      <div class="section__head">
+        <h2 id="cite">Citing Scyros</h2>
+        <p>
+          Until a paper about Scyros itself is published, please cite the
+          study it was introduced in:
+        </p>
+      </div>
+      <div class="code code--scroll">
+        <pre>@article{gilot2026largescalestudyfloatingpointusage,
+  author    = {Gilot, Andrea and Wrigstad, Tobias and Darulova, Eva},
+  title     = {Floating-Point Usage on {GitHub}: A Large-Scale Study of
+               Statically Typed Languages},
+  journal   = {Proc. ACM Program. Lang.},
+  volume    = {10},
+  number    = {OOPSLA1},
+  articleno = {95},
+  numpages  = {28},
+  year      = {2026},
+  month     = apr,
+  publisher = {Association for Computing Machinery},
+  doi       = {10.1145/3798203},
+  url       = {https://doi.org/10.1145/3798203}
+}</pre>
+        <button class="copy-btn" type="button">Copy</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- #include footer -->
+<footer class="site-foot">
+  <div class="wrap">
+    <nav aria-label="Project">
+      <a href="https://github.com/fxpl/scyros">GitHub</a>
+      <a href="https://crates.io/crates/scyros">crates.io</a>
+      <a href="https://github.com/fxpl/scyros-tutorial">Tutorial</a>
+      <a href="https://github.com/fxpl/scyros/releases">Releases</a>
+    </nav>
+    <p>
+      Scyros is open-source software, licensed under
+      <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a> and developed at Uppsala University.
+    </p>
+    <p class="site-foot__funding">
+      Co-funded by the European Union (ERC, HORNET, 101163629) and supported by
+      the Swedish Research Council, grants 2023-05161 and 2024-04565. Views and
+      opinions expressed are those of the authors only and do not necessarily
+      reflect those of the European Union or the European Research Council.
+    </p>
+  </div>
+</footer>
+<!-- /include -->
+
+</body>
+</html>

@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Floating-Point Usage on GitHub · Scyros</title>
+<meta name="description" content="Statistics on how floating-point arithmetic is used in public GitHub repositories, from a large-scale study published at OOPSLA 2026.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/css/site.css">
+<script src="assets/js/site.js"></script>
+<script src="assets/js/study-data.js" defer></script>
+<script src="assets/js/charts.js" defer></script>
+<script src="assets/js/highlight.js" defer></script>
+</head>
+<body>
+
+<!-- #include header current="study" -->
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap site-head__inner">
+    <a class="brand" href="index.html">
+      <img src="assets/logo/neutral.svg" alt="" width="34" height="25">
+      <span>Scyros</span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="docs.html">Docs</a>
+      <a href="study.html" aria-current="page">Study</a>
+    </nav>
+    <div class="site-head__tools">
+      <button class="icon-button theme-toggle" type="button" aria-label="Switch colour theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <a class="icon-button" href="https://github.com/fxpl/scyros" aria-label="Scyros on GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48l-.01-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85l-.01 2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+<!-- /include -->
+
+<main id="main">
+
+  <header class="page-head wrap">
+    <div class="prose">
+      <p class="venue">OOPSLA 2026 · Proc. ACM Program. Lang. 10, OOPSLA1, article 95</p>
+      <h1>Floating-Point Usage on GitHub</h1>
+      <p class="page-head__sub">A Large-Scale Study of Statically Typed Languages</p>
+      <p class="page-head__meta">
+        <a href="https://andreagilot.com/">Andrea Gilot</a>,
+        <a href="https://wrigstad.com/">Tobias Wrigstad</a> and
+        <a href="https://malyzajko.github.io/">Eva Darulova</a>,
+        Uppsala University
+      </p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href="https://doi.org/10.1145/3798203">Read the paper</a>
+      </div>
+    </div>
+    <nav aria-label="On this page">
+      <ul class="page-contents">
+        <li><a href="#method">Method</a></li>
+        <li><a href="#data">Data</a></li>
+        <li><a href="#prevalence">Prevalence</a></li>
+        <li><a href="#languages">Languages</a></li>
+        <li><a href="#structure">Function structure</a></li>
+        <li><a href="#precision">Precision</a></li>
+        <li><a href="#libraries">Libraries</a></li>
+        <li><a href="#benchmarks">Benchmarks</a></li>
+        <li><a href="#reproduce">Reproduce</a></li>
+        <li><a href="#cite-study">Cite</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="study-summary wrap" aria-label="Summary">
+    <div class="prose">
+      <p>
+        Tools that reason about floating-point arithmetic are usually evaluated
+        on small benchmarks collected from earlier papers. We measured what
+        floating-point code in public GitHub repositories actually looks like,
+        and how well those benchmarks represent it.
+      </p>
+    </div>
+    <noscript><p class="section__lede">The charts on this page need JavaScript. The figures behind them are in the paper.</p></noscript>
+  </section>
+
+  <!-- ===================================================================== -->
+  <section class="study-section wrap" id="method" aria-labelledby="method-title">
+    <h2 id="method-title">How we mined the dataset</h2>
+    <p class="section__lede">
+      We mined the dataset with <a href="index.html">Scyros</a> between
+      October 2024 and March 2025. Uniform sampling gave us 125,234,729 unique
+      repository ids. We removed forks and filtered projects on size, age and
+      language, which left 447,209 projects with statically typed code. We then
+      kept the files with floating-point keywords, removed duplicate files, and
+      extracted and measured the functions in six languages. You can run the
+      same <a href="docs.html#pipeline">pipeline</a> to study other languages,
+      other keywords or a newer sample of GitHub.
+    </p>
+
+    <figure class="pipeline-figure">
+      <a href="assets/pictures/pipeline.png">
+        <img src="assets/pictures/pipeline.png" width="2239" height="1260"
+             alt="The nine steps of the mining pipeline, in three stages. Repositories: 1, id sampling, with ids drawn uniformly between 0 and 871 million, then duplicate ids and forks removed; 2, metadata collection, such as creation date, last push, size and main language; 3, metadata filtering, which drops projects under 50 kB, under two months old, or with no main language; 4, language collection, with every language used and the hash of the last commit; 5, language filtering, which drops projects with no statically typed language. Files: 6, downloading, keeping files in a statically typed language that contain floating-point keywords; 7, file deduplication with BLAKE3 hashes. Functions: 8, function extraction, by parsing each file and stripping comments; 9, function filtering, keeping functions that contain floating-point keywords.">
+      </a>
+    </figure>
+  </section>
+
+  <!-- ===================================================================== -->
+  <section class="study-section wrap" id="data" aria-labelledby="data-title">
+    <h2 id="data-title">Dataset and benchmarks</h2>
+
+    <div class="artefacts">
+      <article class="card artefact">
+        <h3>Floating-point dataset</h3>
+        <p>
+          The dataset obtained from the mining pipeline: 10 million floating-point functions from 5 million unique files across 450k projects.
+        </p>
+        <p class="artefact__meta">Zenodo · Apache 2.0</p>
+        <a class="btn btn--primary" href="https://doi.org/10.5281/zenodo.17055622">Get the dataset</a>
+      </article>
+      <article class="card artefact">
+        <h3>C floating-point benchmarks</h3>
+        <p>
+          
+A set of self-contained C floating-point benchmarks extracted from the dataset.
+        </p>
+        <p class="artefact__meta">Zenodo · licence stated per file</p>
+        <a class="btn btn--primary" href="https://doi.org/10.5281/zenodo.22712519">Get the benchmarks</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <section class="study-section wrap" id="prevalence" aria-labelledby="prevalence-title">
+    <h2 id="prevalence-title">How common floating-point code is</h2>
+    <p class="section__lede">
+      We searched for floating-point keywords in four categories: floating-point types (e.g., <code>float</code>, <code>double</code>), transcendental functions (e.g., <code>sin</code>, <code>exp</code>), miscellaneous keywords (e.g., <code>NaN</code>, <code>fmax</code>, <code>fma</code>) and arbitrary-precision types (e.g., <code>mpfr_t</code>, <code>BigFloat</code>).
+    </p>
+
+    <div class="chart-row">
+      <figure class="chart" data-chart="bars" data-source="prevalence" data-series="projects" data-separate="Any of the above" data-unit="%" data-max="100">
+        <figcaption>
+          <p class="chart__title">Projects containing the category</p>
+          <p class="chart__sub">Share of the 447,209 projects</p>
+        </figcaption>
+        <div class="chart__plot"></div>
+      </figure>
+      <figure class="chart" data-chart="range" data-source="prevalence" data-series="q1,median,q3" data-separate="Any of the above" data-unit="%" data-max="40">
+        <figcaption>
+          <p class="chart__title">Files within those projects</p>
+          <p class="chart__sub">Share of a project's files that contain the category</p>
+        </figcaption>
+        <ul class="legend">
+          <li><span class="legend__key legend__key--dot"></span>Median project</li>
+          <li><span class="legend__key legend__key--band"></span>First to third quartile</li>
+        </ul>
+        <div class="chart__plot"></div>
+      </figure>
+    </div>
+    <p class="chart__caption">
+      These are raw matches, that can be subject to false positives. After inspecting 385 files by
+      hand, we estimate with 95% confidence that more than <b>62% of projects
+      contain floating-point code</b>.
+    </p>
+  </section>
+
+  <!-- ===================================================================== -->
+  <section class="study-section wrap" id="languages" aria-labelledby="languages-title">
+    <h2 id="languages-title">Floating-point functions by language</h2>
+    <p class="section__lede">
+      We extracted 9,945,253 functions containing floating-point keywords from
+      six languages. C++ and Java account for two thirds of them.
+    </p>
+
+    <div class="chart-row">
+      <figure class="chart" data-chart="bars" data-source="languages" data-series="functions">
+        <figcaption>
+          <p class="chart__title">Functions extracted</p>
+          <p class="chart__sub">Floating-point functions per language</p>
+        </figcaption>
+        <div class="chart__plot"></div>
+      </figure>
+      <figure class="chart" data-chart="mean-sd" data-source="languages" data-series="perFile,perFileSd" data-unit="%" data-max="100">
+        <figcaption>
+          <p class="chart__title">Floating-point functions per file</p>
+          <p class="chart__sub">Share of a file's functions with floating-point keywords (among files containing such functions)</p>
+        </figcaption>
+        <ul class="legend">
+          <li><span class="legend__key legend__key--dot"></span>Mean</li>
+          <li><span class="legend__key legend__key--whisker"></span>One standard deviation either side</li>
+        </ul>
+        <div class="chart__plot"></div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <section class="study-section wrap" id="structure" aria-labelledby="structure-title">
+    <h2 id="structure-title">What floating-point functions look like</h2>
+    <p class="section__lede">
+      We measured the occurrence of language features in our dataset, and compare them with FPBench, a
+      benchmark suite often used to evaluate floating-point analysis tools. We also compare these results with a population of generic functions.
+    </p>
+
+    <ul class="legend">
+      <li><span class="legend__key"></span>Floating-point functions in the sample</li>
+      <li><span class="legend__key legend__key--s2"></span>FPBench</li>
+      <li><span class="legend__key legend__key--tick"></span><span class="legend__key legend__key--compare"></span>Generic functions, from 10,000 randomly sampled projects</li>
+      <li><span class="legend__key legend__key--dot"></span><span class="legend__key legend__key--band"></span>Median and first to third quartile</li>
+    </ul>
+    <div class="chart-grid">
+      <figure class="chart" data-chart="range" data-source="structure" data-series="words-q1,words,words-q3" data-compare="words-all-q1,words-all,words-all-q3" data-emphasis="FPBench">
+        <figcaption><p class="chart__title">Size</p><p class="chart__sub">Words per function</p></figcaption>
+        <div class="chart__plot"></div>
+      </figure>
+      <figure class="chart" data-chart="range" data-source="structure" data-series="params-q1,params,params-q3" data-compare="params-all-q1,params-all,params-all-q3" data-emphasis="FPBench">
+        <figcaption><p class="chart__title">Parameters</p><p class="chart__sub">Parameters per function</p></figcaption>
+        <div class="chart__plot"></div>
+      </figure>
+      <figure class="chart" data-chart="bars" data-source="structure" data-series="transc" data-emphasis="FPBench" data-unit="%" data-max="100">
+        <figcaption><p class="chart__title">Transcendental functions</p><p class="chart__sub">Share of functions that mention one</p></figcaption>
+        <div class="chart__plot"></div>
+      </figure>
+      <figure class="chart" data-chart="bars" data-source="structure" data-series="loops" data-tick="loops-all" data-emphasis="FPBench" data-unit="%" data-max="100">
+        <figcaption><p class="chart__title">Loops</p><p class="chart__sub">Share of functions with at least one</p></figcaption>
+        <div class="chart__plot"></div>
+      </figure>
+      <figure class="chart" data-chart="bars" data-source="structure" data-series="conds" data-tick="conds-all" data-emphasis="FPBench" data-unit="%" data-max="100">
+        <figcaption><p class="chart__title">Conditionals</p><p class="chart__sub">Share of functions with at least one</p></figcaption>
+        <div class="chart__plot"></div>
+      </figure>
+      <figure class="chart" data-chart="bars" data-source="structure" data-series="calls" data-tick="calls-all" data-emphasis="FPBench" data-unit="%" data-max="100">
+        <figcaption><p class="chart__title">Function calls</p><p class="chart__sub">Share of functions with at least one</p></figcaption>
+        <div class="chart__plot"></div>
+      </figure>
+      <figure class="chart" data-chart="range" data-source="structure" data-series="loops-q1,loops-med,loops-q3" data-compare="loops-all-q1,loops-all-med,loops-all-q3" data-emphasis="FPBench" data-whole-numbers>
+        <figcaption><p class="chart__title">Loops per function</p><p class="chart__sub">In functions with at least one</p></figcaption>
+        <div class="chart__plot"></div>
+      </figure>
+      <figure class="chart" data-chart="range" data-source="structure" data-series="conds-q1,conds-med,conds-q3" data-compare="conds-all-q1,conds-all-med,conds-all-q3" data-emphasis="FPBench" data-whole-numbers>
+        <figcaption><p class="chart__title">Conditionals per function</p><p class="chart__sub">In functions with at least one</p></figcaption>
+        <div class="chart__plot"></div>
+      </figure>
+      <figure class="chart" data-chart="range" data-source="structure" data-series="calls-q1,calls-med,calls-q3" data-compare="calls-all-q1,calls-all-med,calls-all-q3" data-emphasis="FPBench" data-whole-numbers>
+        <figcaption><p class="chart__title">Calls per function</p><p class="chart__sub">In functions with at least one</p></figcaption>
+        <div class="chart__plot"></div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <section class="study-section wrap" id="precision" aria-labelledby="precision-title">
+    <h2 id="precision-title">Which precision is used</h2>
+    <p class="section__lede">
+      Double precision dominates in Go and Java, and single precision in C++
+      and C#. A function can mention both, so the shares do not add up to
+      100%. We left out TypeScript, since it has a single number type.
+    </p>
+
+    <figure class="chart" data-chart="bars" data-source="precision" data-series="single,double" data-unit="%" data-max="100">
+      <figcaption>
+        <p class="chart__title">Functions mentioning each precision</p>
+      </figcaption>
+      <ul class="legend">
+        <li><span class="legend__key"></span>Single precision (32-bit)</li>
+        <li><span class="legend__key legend__key--s2"></span>Double precision (64-bit)</li>
+      </ul>
+      <div class="chart__plot"></div>
+    </figure>
+    <p class="chart__caption">
+      Other precisions are rare: half precision appears in 2.7% of C functions
+      and quadruple precision in 1.9%. Between 2.7% (C#) and 8.5% (Go) of
+      functions mix precisions.
+    </p>
+  </section>
+
+  <!-- ===================================================================== -->
+  <section class="study-section wrap" id="libraries" aria-labelledby="libraries-title">
+    <h2 id="libraries-title">Use of mathematical libraries</h2>
+    <p class="section__lede">
+      The GNU Scientific Library (GSL) is another common evaluation target in the floating-point analysis
+      literature. Among files with floating-point keywords, each GSL module
+      appears between significantly less often than the C standard
+      maths header, <code>math.h</code>.
+    </p>
+
+    <figure class="chart" data-chart="log-dots" data-source="libraries" data-series="files-c,files-cpp" data-unit="%" data-min="0.001" data-max="100">
+      <figcaption>
+        <p class="chart__title">Files using the library</p>
+        <p class="chart__sub">Share of files with floating-point keywords, logarithmic scale</p>
+      </figcaption>
+      <ul class="legend">
+        <li><span class="legend__key legend__key--dot"></span>C</li>
+        <li><span class="legend__key legend__key--dot legend__key--s2"></span>C++</li>
+      </ul>
+      <div class="chart__plot"></div>
+    </figure>
+  </section>
+
+  <!-- ===================================================================== -->
+  <section class="study-section wrap" id="benchmarks" aria-labelledby="benchmarks-title">
+    <h2 id="benchmarks-title">Benchmarks from real code</h2>
+    <p class="section__lede">
+      As a case study, we extracted 59 self-contained C benchmarks from the
+      dataset. Their median length is 30 lines, against 3 lines for FPBench,
+      and they keep the constructs that benchmark suites usually leave out.
+    </p>
+
+    <figure class="chart" data-chart="bars" data-source="constructs" data-series="share" data-unit="%" data-max="100">
+      <figcaption>
+        <p class="chart__title">Language constructs used</p>
+        <p class="chart__sub">Share of the 59 benchmarks</p>
+      </figcaption>
+      <div class="chart__plot"></div>
+    </figure>
+
+    <h3>Two examples</h3>
+    <div class="examples">
+      <figure class="example">
+        <figcaption>
+          <strong>A call to a helper function.</strong> <code>calAR</code>
+          calls <code>calSum</code>, so a tool has to reason across the call
+          to analyse its arithmetic. Figure 6 in the paper.
+        </figcaption>
+        <div class="listing">
+          <p class="listing__head"><span>calSum, calAR</span><span>C</span></p>
+          <pre data-lang="c">double calSum(double data[], int N, int I) {
+  if (I == 0) { return data[0]; }
+  double sum = 0.f;
+  int idx = 0;
+  if (I &gt;= N) { idx = N; }
+  else { idx = I; }
+  for (int i = 0; i &lt; idx; i++) {
+    sum += data[I - i];
+  }
+  return sum;
+}
+
+void calAR(double PRICE[][4], int count, int N,
+           double AR[]) {
+  double hoValue[count];
+  double olValue[count];
+  for (int i = 0; i &lt; count; i++) {
+    hoValue[i] = PRICE[i][0] - PRICE[i][2];
+    olValue[i] = PRICE[i][2] - PRICE[i][1];
+  }
+  for (int i = 0; i &lt; count; i++) {
+    double sum1 = calSum(hoValue, N, i);
+    double sum2 = calSum(olValue, N, i);
+    AR[i] = sum1 / sum2 * 100;
+  }
+}</pre>
+        </div>
+      </figure>
+      <figure class="example">
+        <figcaption>
+          <strong>Low-level memory manipulation.</strong>
+          <code>quiet_nanf</code> stores the least significant bits of its
+          input in a NaN value, instead of doing arithmetic on it. Figure 7 in
+          the paper.
+        </figcaption>
+        <div class="listing">
+          <p class="listing__head"><span>quiet_nanf</span><span>C</span></p>
+          <pre data-lang="c">static float quiet_nanf(float x) {
+  uint32_t tmp;
+  memcpy(&amp;tmp, &amp;x, 4);
+  tmp |= 0x7fc00000lu;
+  memcpy(&amp;x, &amp;tmp, 4);
+  return x;
+}</pre>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <section class="study-section wrap" id="reproduce" aria-labelledby="reproduce-title">
+    <h2 id="reproduce-title">Reproducing the results</h2>
+    <p class="section__lede">
+      The OOPSLA artifact contains everything needed to reproduce the results
+      in the paper.
+    </p>
+    <a class="btn" href="https://doi.org/10.5281/zenodo.18500268">Get the artifact (Zenodo, 4.7 GB)</a>
+  </section>
+
+  <!-- ===================================================================== -->
+  <section class="study-section wrap" id="cite-study" aria-labelledby="cite-study-title">
+    <div class="prose">
+      <h2 id="cite-study-title">Citing the study</h2>
+      <p class="muted">If you use the dataset or the benchmarks, please cite the paper:</p>
+      <div class="code code--scroll">
+        <pre>@article{gilot2026largescalestudyfloatingpointusage,
+  author    = {Gilot, Andrea and Wrigstad, Tobias and Darulova, Eva},
+  title     = {Floating-Point Usage on {GitHub}: A Large-Scale Study of
+               Statically Typed Languages},
+  journal   = {Proc. ACM Program. Lang.},
+  volume    = {10},
+  number    = {OOPSLA1},
+  articleno = {95},
+  numpages  = {28},
+  year      = {2026},
+  month     = apr,
+  publisher = {Association for Computing Machinery},
+  doi       = {10.1145/3798203},
+  url       = {https://doi.org/10.1145/3798203}
+}</pre>
+        <button class="copy-btn" type="button">Copy</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- #include footer -->
+<footer class="site-foot">
+  <div class="wrap">
+    <nav aria-label="Project">
+      <a href="https://github.com/fxpl/scyros">GitHub</a>
+      <a href="https://crates.io/crates/scyros">crates.io</a>
+      <a href="https://github.com/fxpl/scyros-tutorial">Tutorial</a>
+      <a href="https://github.com/fxpl/scyros/releases">Releases</a>
+    </nav>
+    <p>
+      Scyros is open-source software, licensed under
+      <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a> and developed at Uppsala University.
+    </p>
+    <p class="site-foot__funding">
+      Co-funded by the European Union (ERC, HORNET, 101163629) and supported by
+      the Swedish Research Council, grants 2023-05161 and 2024-04565. Views and
+      opinions expressed are those of the authors only and do not necessarily
+      reflect those of the European Union or the European Research Council.
+    </p>
+  </div>
+</footer>
+<!-- /include -->
+
+</body>
+</html>
