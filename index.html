@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Scyros: reproducible mining of GitHub repositories</title>
-<meta name="description" content="Scyros is a framework for sound, reproducible and scalable studies of public GitHub repositories.">
+<title>Scyros: reproducible mining of software repositories</title>
+<meta name="description" content="Scyros is a framework for sound, reproducible and scalable studies of public software repositories.">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="stylesheet" href="assets/css/site.css">
@@ -21,8 +21,8 @@
       <span>Scyros</span>
     </a>
     <nav class="site-nav" aria-label="Main">
+      <a href="tutorial.html">Tutorial</a>
       <a href="docs.html">Docs</a>
-      <a href="study.html">Study</a>
     </nav>
     <div class="site-head__tools">
       <button class="icon-button theme-toggle" type="button" aria-label="Switch colour theme">
@@ -96,7 +96,7 @@
 
       <p class="install__next">
         Then run <code>scyros --help</code>. New to Scyros? Follow the
-        <a href="https://github.com/fxpl/scyros-tutorial">tutorial</a> or read the
+        <a href="tutorial.html">tutorial</a> or read the
         <a href="docs.html">docs</a>.
       </p>
     </div>
@@ -105,18 +105,42 @@
   <section class="section wrap" aria-labelledby="research">
     <div class="section__head">
       <h2 id="research">Research</h2>
-      <p>Studies that use Scyros.</p>
+      <p>Papers that use Scyros.</p>
     </div>
-    <a class="card publication" href="study.html">
-      <p class="venue">OOPSLA 2026</p>
-      <h3>Floating-Point Usage on GitHub: A Large-Scale Study of Statically Typed Languages</h3>
-      <p>
-        The study Scyros was built for. It measured how floating-point
-        arithmetic is used in 447,209 projects, and released a dataset of
-        almost ten million floating-point functions.
-      </p>
-      <p class="card__more">Statistics, dataset and benchmarks &rarr;</p>
-    </a>
+    <div class="publications">
+            <article class="card publication" id="stainless">
+        <p class="venue">TACAS 2026</p>
+        <h3>Verifying Floating-Point Programs in Stainless</h3>
+        <p class="publication__authors">Andrea Gilot, Axel Bergström and Eva Darulova</p>
+        <p>
+          An extension of the Stainless deductive verifier with floating-point
+          support. The extension is evaluated on a new set
+          of benchmarks extracted with Scyros from the dataset mined in the OOPSLA 2026 empirical study of floating-point code. These benchmarks show that Stainless can verify specifications of real-world code and produce counterexamples
+          when the specifications do not hold.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="https://doi.org/10.1007/978-3-032-22749-2_1">Paper</a>
+          <a class="btn" href="https://github.com/fxpl/stainless-float-benchmarks">Benchmarks</a>
+        </div>
+      </article>
+      <article class="card publication" id="floating-point-usage">
+        <p class="venue">OOPSLA 2026</p>
+        <h3>Floating-Point Usage on GitHub: A Large-Scale Study of Statically Typed Languages</h3>
+        <p class="publication__authors">Andrea Gilot, Tobias Wrigstad and Eva Darulova</p>
+        <p>
+          An empirical study of how floating-point code is used on GitHub.
+          This study uses Scyros to mine 450k repositories containing statically typed floating-point code, and extracts 10 million floating-point functions from them.
+          It shows that floating-point code is used in the majority of engineered repositories on GitHub, and that the benchmarks used in the literature to evaluate automated reasoning techniques for floating-point arithmetic do not fully represent the floating-point code used in practice.
+          The study also shows how Scyros and the mined dataset can be used to generate new floating-point benchmarks that reflect real-world code.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="https://doi.org/10.1145/3798203">Paper</a>
+          <a class="btn" href="https://doi.org/10.5281/zenodo.17055622">Dataset</a>
+          <a class="btn" href="https://doi.org/10.5281/zenodo.22712519">Benchmarks</a>
+        </div>
+      </article>
+
+    </div>
   </section>
 
   <section class="section wrap" aria-labelledby="cite">
@@ -157,7 +181,7 @@
     <nav aria-label="Project">
       <a href="https://github.com/fxpl/scyros">GitHub</a>
       <a href="https://crates.io/crates/scyros">crates.io</a>
-      <a href="https://github.com/fxpl/scyros-tutorial">Tutorial</a>
+      <a href="tutorial.html">Tutorial</a>
       <a href="https://github.com/fxpl/scyros/releases">Releases</a>
     </nav>
     <p>

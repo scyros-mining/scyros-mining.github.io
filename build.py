@@ -3,7 +3,7 @@
 
 Each page marks a region like this:
 
-    <!-- #include header current="study" -->
+    <!-- #include header current="docs" -->
     ...generated, do not hand-edit...
     <!-- /include -->
 
