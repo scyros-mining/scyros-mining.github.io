@@ -1,217 +1,379 @@
 <!doctype html>
 <html lang="en-GB">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tutorial · Scyros</title>
-<meta name="description" content="Run a complete small study with Scyros, step by step: sample GitHub, filter the repositories, download their code and extract the functions you are interested in.">
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<link rel="stylesheet" href="assets/css/site.css">
-<script src="assets/js/site.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tutorial · Scyros</title>
+  <meta name="description"
+    content="A complete small-scale mining study with Scyros: random sampling of GitHub, repository filtering, code download and function extraction.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script src="assets/js/site.js"></script>
 </head>
+
 <body>
 
-<!-- #include header current="tutorial" -->
-<a class="skip-link" href="#main">Skip to content</a>
-<header class="site-head">
-  <div class="wrap site-head__inner">
-    <a class="brand" href="index.html">
-      <img src="assets/logo/neutral.svg" alt="" width="34" height="25">
-      <span>Scyros</span>
-    </a>
-    <nav class="site-nav" aria-label="Main">
-      <a href="tutorial.html" aria-current="page">Tutorial</a>
-      <a href="docs.html">Docs</a>
-    </nav>
-    <div class="site-head__tools">
-      <button class="icon-button theme-toggle" type="button" aria-label="Switch colour theme">
-        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-      </button>
-      <a class="icon-button" href="https://github.com/fxpl/scyros" aria-label="Scyros on GitHub">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48l-.01-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85l-.01 2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
+  <!-- #include header current="tutorial" -->
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-head">
+    <div class="wrap site-head__inner">
+      <a class="brand" href="index.html">
+        <img src="assets/logo/neutral.svg" alt="" width="34" height="25">
+        <span>Scyros</span>
       </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="tutorial.html" aria-current="page">Tutorial</a>
+        <a href="docs.html">Docs</a>
+      </nav>
+      <div class="site-head__tools">
+        <button class="icon-button theme-toggle" type="button" aria-label="Switch colour theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path
+              d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+          </svg>
+        </button>
+        <a class="icon-button" href="https://github.com/fxpl/scyros" aria-label="Scyros on GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path
+              d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48l-.01-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85l-.01 2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2z" />
+          </svg>
+        </a>
+      </div>
     </div>
-  </div>
-</header>
-<!-- /include -->
+  </header>
+  <!-- /include -->
 
-<main id="main" class="wrap docs">
+  <main id="main" class="wrap docs">
 
-  <nav class="docs__nav" aria-label="On this page">
-    <div>
-      <p class="docs__nav-title">On this page</p>
-      <ul>
-        <li><a href="#before">Before you start</a></li>
-        <li><a href="#plan">The plan</a></li>
-        <li>
-          <a href="#steps">The steps</a>
-          <ul>
-            <li><a href="#step-folder">1. Folder</a></li>
-            <li><a href="#step-keywords">2. Keyword file</a></li>
-            <li><a href="#step-sample">3. Sample</a></li>
-            <li><a href="#step-clean">4. Duplicates and forks</a></li>
-            <li><a href="#step-metadata">5. Metadata</a></li>
-            <li><a href="#step-languages">6. Languages</a></li>
-            <li><a href="#step-download">7. Download</a></li>
-            <li><a href="#step-dedup">8. Duplicate files</a></li>
-            <li><a href="#step-parse">9. Functions</a></li>
-          </ul>
-        </li>
-        <li><a href="#results">Your results</a></li>
-        <li><a href="#problems">If something goes wrong</a></li>
-        <li><a href="#next">Next steps</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <div class="docs__body">
-
-    <h1>Tutorial</h1>
-    <p class="lead">
-      This tutorial runs a complete small study with Scyros, from sampling
-      GitHub to a table of functions that you can analyse. You do not need to
-      write any code. You type nine short commands in a terminal, and check
-      the result of each one before you go on.
-    </p>
-    <p>
-      The study answers one question: <em>which Java and Go functions use
-      concurrency, and what do they look like?</em> Once you have run it, you
-      can change a single file to ask your own question.
-    </p>
-
-    <section aria-labelledby="before">
-      <h2 id="before">Before you start</h2>
-      <p>You need three things.</p>
-
-      <h3>A terminal</h3>
-      <p>
-        On macOS, open <strong>Terminal</strong>. On Windows, open
-        <strong>PowerShell</strong>. On Linux, open your usual terminal. Every
-        command in this tutorial works the same way in all three.
-      </p>
-
-      <h3>Scyros</h3>
-      <p>
-        Follow the <a href="docs.html#install">installation instructions</a>,
-        then check that it works:
-      </p>
-      <div class="code">
-        <pre>scyros --version</pre>
-        <button class="copy-btn" type="button">Copy</button>
+    <nav class="docs__nav" aria-label="On this page">
+      <div>
+        <p class="docs__nav-title">On this page</p>
+        <ul>
+          <li><a href="#before">Prerequisites</a></li>
+          <li><a href="#plan">Pipeline overview</a></li>
+          <li>
+            <a href="#steps">Steps</a>
+            <ul>
+              <li><a href="#step-folder">1. Working directory</a></li>
+              <li><a href="#step-keywords">2. Keyword file</a></li>
+              <li><a href="#step-sample">3. Sampling</a></li>
+              <li><a href="#step-clean">4. Duplicates and forks</a></li>
+              <li><a href="#step-metadata">5. Metadata filter</a></li>
+              <li><a href="#step-languages">6. Language filter</a></li>
+              <li><a href="#step-download">7. Download</a></li>
+              <li><a href="#step-dedup">8. File deduplication</a></li>
+              <li><a href="#step-parse">9. Function extraction</a></li>
+            </ul>
+          </li>
+          <li><a href="#results">Output</a></li>
+          <li><a href="#problems">Troubleshooting</a></li>
+        </ul>
       </div>
-      <p class="check">
-        <strong>Check:</strong> the terminal prints the version, such as
-        <code>scyros 0.4.0</code>. If it says that the command is not found,
-        close the terminal, open a new one and try again: the installer
-        updates your settings only for new terminals.
-      </p>
+    </nav>
 
-      <h3>A GitHub token</h3>
-      <p>
-        Scyros asks GitHub about many repositories. GitHub answers far more
-        requests from you if you identify yourself with a personal access
-        token. The token only needs to read public information:
-      </p>
-      <ol>
-        <li>
-          On GitHub, open <strong>Settings</strong>, then
-          <strong>Developer settings</strong>, <strong>Personal access
-          tokens</strong> and <strong>Fine-grained tokens</strong>.
-        </li>
-        <li>
-          Choose <strong>Generate new token</strong>, give it a name and an
-          expiry date, and leave the repository access on public repositories.
-          Do not add any permissions.
-        </li>
-        <li>Copy the token. GitHub shows it only once.</li>
-      </ol>
-      <p>
-        GitHub's
-        <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token">own guide</a>
-        has screenshots of each step. Keep the token secret, like a password.
-        You will save it in a file in step 1.
-      </p>
-    </section>
+    <div class="docs__body">
 
-    <section aria-labelledby="plan">
-      <h2 id="plan">The plan</h2>
-      <p>
-        A study with Scyros is a chain of steps. Each step reads the file that
-        the previous step wrote and writes a new one, so you can stop, look at
-        a file and go on later. Here is the whole chain:
+      <h1>Tutorial</h1>
+      <p class="lead">
+        This tutorial runs a complete, small-scale mining study with Scyros.
+        In this example study, we will use Scyros to collects Java and Go functions that use concurrency
+        primitives. The tutorial follows Scyros 0.4.0.
       </p>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr><th scope="col">Step</th><th scope="col">What it does</th><th scope="col">Writes</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>1</td><td>Create a folder for the study</td><td><code>tokens.csv</code></td></tr>
-            <tr><td>2</td><td>Describe what you are looking for</td><td><code>concurrency.json</code></td></tr>
-            <tr><td>3</td><td>Pick 2,000 repositories at random</td><td><code>ids.csv</code></td></tr>
-            <tr><td>4</td><td>Remove repositories counted twice, and forks</td><td><code>unique_ids.csv</code>, <code>repos.csv</code></td></tr>
-            <tr><td>5</td><td>Ask GitHub about each repository and keep the substantial ones</td><td><code>metadata.csv</code>, <code>filtered.csv</code></td></tr>
-            <tr><td>6</td><td>Keep the repositories that contain Java or Go</td><td><code>languages.csv</code>, <code>selected.csv</code></td></tr>
-            <tr><td>7</td><td>Download their code and keep the files that use concurrency</td><td><code>repos/</code>, <code>files.csv</code>, <code>projects.csv</code></td></tr>
-            <tr><td>8</td><td>Remove duplicate files</td><td><code>unique_files.csv</code>, <code>duplicates.csv</code></td></tr>
-            <tr><td>9</td><td>Extract the functions that use concurrency</td><td><code>functions.csv</code>, <code>function_logs.csv</code></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p>
-        The study sends about 1,500 requests to GitHub, mostly in step 5,
-        which asks about each repository in turn. That is well within the
-        5,000 requests per hour that a token allows. Most of the time is spent
-        waiting for GitHub, and long steps show a progress bar.
-      </p>
-    </section>
-
-    <section aria-labelledby="steps">
-      <h2 id="steps">The steps</h2>
-
-      <h3 id="step-folder">1. Create a folder for the study</h3>
-      <p>Create a folder and move into it:</p>
-      <div class="code">
-        <pre>mkdir concurrency-study
-cd concurrency-study</pre>
-        <button class="copy-btn" type="button">Copy</button>
-      </div>
-      <p>
-        In this folder, create a file called <code>tokens.csv</code> with a
-        text editor. Its first line is the word <code>token</code>, and its
-        second line is the token you copied from GitHub:
-      </p>
-      <figure class="file">
-        <figcaption>tokens.csv</figcaption>
+      <section aria-labelledby="before">
+        <h2 id="before">Prerequisites</h2>
+        <p>
+          To run this tutorial you will need to have Scyros installed as well as a personal access GitHub token to
+          communicate with the GitHub REST API.
+        </p>
+        <h3>Scyros</h3>
+        <p>
+          Install Scyros following the
+          <a href="docs.html#install">installation instructions</a>, and
+          confirm that it is on your path:
+        </p>
         <div class="code">
-          <pre>token
-github_pat_11ABCDEFG0123456789_abcdefghijklmnopqrstuvwxyz</pre>
+          <pre>scyros --version</pre>
+          <button class="copy-btn" type="button">Copy</button>
         </div>
-      </figure>
-      <p>
-        Save it as plain text. In TextEdit on macOS, first choose
-        <strong>Format</strong>, then <strong>Make Plain Text</strong>. In
-        Notepad on Windows, make sure the name does not end in
-        <code>.txt</code>.
-      </p>
-      <p class="check">
-        <strong>Check:</strong> <code class="cmd">ls</code> lists
-        <code>tokens.csv</code>. On Windows, the command <code>ls</code> works
-        in PowerShell too.
-      </p>
+        <p>
+          <code class="cmd">scyros --help</code> lists the available subcommands, and
+          <code class="cmd">scyros &lt;subcommand&gt; --help</code> describes all the options for a given subcommand.
+        </p>
 
-      <h3 id="step-keywords">2. Describe what you are looking for</h3>
-      <p>
-        A keyword file tells Scyros which languages to keep, which files
-        belong to each language, and which words to search for. Create
-        <code>concurrency.json</code> in the same folder, with this content:
-      </p>
-      <figure class="file">
-        <figcaption>concurrency.json</figcaption>
-        <div class="code code--scroll">
-          <pre>{
+        <h3>GitHub token</h3>
+        <p>
+          To sample repository, query their metadata or download them, you will need a personal access token to the
+          GitHub REST API.
+          In GitHub, go to <strong>Settings → Developer settings → Personal access tokens →
+            Fine-grained tokens</strong>, generate a token with public repository
+          access only (see
+          <a
+            href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token">GitHub's
+            documentation</a>
+          for details), and copy it in a file <code>tokens.csv</code> of this form.
+        <figure class="file">
+          <figcaption>tokens.csv</figcaption>
+          <div class="code">
+            <pre>token
+copy your token here
+</pre>
+          </div>
+        </figure>
+
+        Do not commit or share this file.
+        </p>
+      </section>
+
+      <section aria-labelledby="plan">
+        <h2 id="plan">Pipeline overview</h2>
+        <p>
+          Running a study with Scyros involves executing a series of commands that process data in a pipeline.
+          Each step of the pipeline reads the CSV
+          file written by the previous step and writes a new one, so every
+          intermediate stage of the sample can be inspected, reported and
+          rerun independently.
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Step</th>
+                <th scope="col">Purpose</th>
+                <th scope="col">Output</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>3</td>
+                <td>Draw a random sample of 2,000 repositories</td>
+                <td><code>ids.csv</code></td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Remove duplicate entries and forks</td>
+                <td><code>unique_ids.csv</code>, <code>repos.csv</code></td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Collect repository metadata and exclude trivial repositories</td>
+                <td><code>metadata.csv</code>, <code>filtered.csv</code></td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>Keep repositories containing Java or Go</td>
+                <td><code>languages.csv</code>, <code>selected.csv</code></td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>Download source code at a fixed commit and keep matching files</td>
+                <td><code>repos/</code>, <code>files.csv</code>, <code>projects.csv</code></td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>Remove duplicate files</td>
+                <td><code>unique_files.csv</code>, <code>duplicates.csv</code></td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td>Extract matching functions and compute their metrics</td>
+                <td><code>functions.csv</code>, <code>function_logs.csv</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </section>
+
+      <section aria-labelledby="steps">
+        <h2 id="steps">Steps</h2>
+
+        <h3 id="step-sample">1. Sample repositories</h3>
+        <p>
+          GitHub assigns repository ids in roughly chronological order. Scyros
+          either draws ids uniformly at random, with replacement, or in increasing order (<code>--mode linear</code>).
+          Specific flags can be used to set the minimum (with <code>--min</code>) and maximum (with <code>--max</code>)
+          id Scyros queries, as well
+          as the number of ids to query. Due to the nature of the REST API, ids are queried by contiguous chunks of 100.
+          In this tutorial, we will sample 2000 repository ids at random from projects created between the creation of
+          GitHub and 5 Jan 2026 (default max id).
+          To execute this step, run the following command:
+        </p>
+
+        <div class="code">
+          <pre>scyros ids -t tokens.csv -n 2000 -o ids.csv</pre>
+          <button class="copy-btn" type="button">Copy</button>
+        </div>
+
+        <p>The name of the sampled repositories will be stored in an output CSV file (here named <code>ids.csv</code>).
+          This file contains four columns: the id of each repository, its name, whether it is a fork (1) or not (0), and
+          in which request this repository was sampled.
+        </p>
+
+        <figure class="file">
+          <figcaption>ids.csv</figcaption>
+          <div class="code code--scroll">
+            <pre>id,name,fork,request_number
+412873310,alice/chat-server,0,0
+412873318,bob/dotfiles,0,0
+412873325,carol/spring-petclinic,1,0
+...
+</pre>
+          </div>
+        </figure>
+        <p>
+          The random seed is fixed (configurable with <code>-s</code>),
+          so running the same command draws the same ids. In addition,
+          if the process is paused or interrupted, it can be resumed by rerunning the command
+          without losing earlier results while not compromising reproducibility.
+        </p>
+
+        <h3 id="step-clean">2. Remove duplicate ids</h3>
+        <p>Because sampling is with replacement, the same repository can be
+          recorded more than once. To remove duplicate ids, run the following subcommand.
+        </p>
+        <div class="code">
+          <pre>scyros duplicate_ids -i ids.csv -o unique_ids.csv
+</pre>
+          <button class="copy-btn" type="button">Copy</button>
+        </div>
+        <p>
+          The result is stored in <code>unique_ids.csv</code>. On a sample of 2000 ids, the probability of running into
+          duplicates is very low.
+
+        <h3 id="step-clean">3. Remove forks</h3>
+        To avoid popular projects being overrepresented, we also remove forks.
+        With Scyros, you can do this with the following command:
+        </p>
+        <div class="code">
+          <pre>scyros forks -i unique_ids.csv -o ids_without_forks.csv
+</pre>
+          <button class="copy-btn" type="button">Copy</button>
+        </div>
+        The result is stored in <code>ids_without_fork.csv</code>. On average, one third of the repositories in the
+        sample are forks, and should therefore be discarded with this operation.
+        <h3 id="step-metadata">4. Collect metadata</h3>
+        Run the following command to retrieve each repository's metadata.
+        <div class="code">
+          <pre>scyros metadata -i repos.csv -t tokens.csv -o metadata.csv</pre>
+          <button class="copy-btn" type="button">Copy</button>
+        </div>
+        <p>
+          This metadata includes the primary language of the repository, its size (in kB), its creation and last push
+          dates (timestamps in Unix time),
+          its popularity counts and its licence.
+        </p>
+        <figure class="file">
+          <figcaption>metadata.csv</figcaption>
+          <div class="code code--scroll">
+            <pre>id,name,language,created,pushed,updated,fork,disabled,archived,stars,forks,issues,has_issues,watchers_count,subscribers,size,license
+412873310,alice/chat-server,Go,1631015230,1712345678,1712345690,0,0,0,4,1,0,1,4,1,612,MIT License
+412873318,bob/dotfiles,Shell,1631015302,1633700000,1633700012,0,0,0,0,0,0,1,0,1,18,unknown
+...
+</pre>
+          </div>
+        </figure>
+        <h3 id="step-clean">4. Filter from metadata</h3>
+        <p>
+          Many public repositories are empty, not software projects, or tiny projects
+          abandoned shortly after their creation (see the fault in our stars).
+          Studying developed/engineered repositories means we should exclude these.
+          As per the fault in our stars' recommendations, Scyros provides a command to
+          filter all the repositories under a given size (<code>-s</code>, in kB), or younger than a given threshold
+          (<code>-a</code>, the age is defined as the number of days between the last push and the creation date). The
+          <code>--non-code</code> flags allows you to filter repositories without a language assigned by GitHub, most
+          often repositories holding only documentation, data or binaries. The authors of the paper show that popularity
+          metrics such as stars bias such studies, and should therefore be avoided.
+          Let us keep only the projects older than 60 days and bigger than 50 kB with a language assigned by GitHub. The
+          filtered dataset is stored in <code>filtered_metadata.csv</code>
+        </p>
+        <div class="code">
+          <pre>scyros filter_metadata -i metadata.csv -s 50 -a 60 --non-code -o filtered_metadata.csv</pre>
+          <button class="copy-btn" type="button">Copy</button>
+        </div>
+        <p>
+          <code>filter_metadata</code> runs locally on
+          <code>metadata.csv</code> and sends no requests, so you can compare different
+          thresholds cheaply. After this phase approximatively 10% of the repositories should remain.
+        </p>
+
+        <h3 id="step-languages">5. Query languages and last commit </h3>
+        <p>
+          GitHub's primary language understates multi-language repositories:
+          a Kotlin project may also contain Java. This command records the full
+          language breakdown of each repository, in bytes, together with its
+          latest commit, which pins the version of the code downloaded in
+          the next steps.
+        </p>
+        <div class="code">
+          <pre>scyros languages -i filtered_metadata.csv -t tokens.csv -o languages.csv</pre>
+          <button class="copy-btn" type="button">Copy</button>
+        </div>
+
+        <figure class="file">
+          <figcaption>languages.csv</figcaption>
+          <div class="code code--scroll">
+            <pre>id,name,languages,latest_commit
+412873310,alice/chat-server,Go:80312;JavaScript:15420;Dockerfile:310,9f2c1a7e5b0d4c3a8e6f1b2d9c0a7e4f3b5d8c1a
+412873402,dan/budget-app,Kotlin:120344;Java:5120,4be81d0f2a6c9e3b7d5f1a8c0e2b4d6f8a1c3e5b</pre>
+          </div>
+        </figure>
+        <h3 id="step-languages">6. Keep repositories in Java and Go </h3>
+
+        <p>We now need to keep only the repositories that contain code in Java or Go. To do so, we create a JSON config
+          file that specifies the languages we include in our study</p>
+        <figure class="file">
+          <figcaption>config.json</figcaption>
+          <div class="code code--scroll">
+            <pre>{
+  "languages": [
+    {"name": "java"},
+    {"name": "go"}
+  ]
+}</pre>
+            <button class="copy-btn" type="button">Copy</button>
+          </div>
+        </figure>
+        and run the following command to filter the repositories with the specified languages. The output is stored in
+        <code>java_go_repos.csv</code>.
+        <div class="code">
+          <pre>scyros filter_languages -i languages.csv -l config.json -o java_go_repos.csv</pre>
+          <button class="copy-btn" type="button">Copy</button>
+        </div>
+
+        <h3 id="step-download">7. Download the code</h3>
+        The next step is to download the code of the repositories we want to study.
+        The command below downloads the repositories at the commit recorded in step <a href="#step-languages">6</a>, and
+        keeps only the files written in Java or Go and that contain a keyword related to concurrency. To specify this,
+        we first need to specify the file extensions we consider for each language, and which keywords relate to
+        concurrency. We do this by editing the <code>config.json</code> file we created in step 6:
+        <div class="code">
+          <pre>scyros download -i java_go_repos.csv -t tokens.csv -k config.json -d repos -p projects.csv -f files.csv</pre>
+          <button class="copy-btn" type="button">Copy</button>
+        </div>
+        <p>
+          Each repository is downloaded into <code>repos/</code> at the commit
+          recorded in step 6, so rerunning the study retrieves identical code,
+          provided the repository is still public and its history has not been
+          rewritten.
+          Files outside the configured extensions, and files containing none of
+          the keywords, are then deleted. This file-level filter searches the
+          whole file, comments included. <code>files.csv</code> lists the
+          remaining files, with line and word counts and the number of keyword
+          matches, in a column named after the keyword file:
+        </p>
+        <figure class="file">
+          <figcaption>config.json</figcaption>
+          <div class="code code--scroll">
+            <pre>
+{
   "languages": [
     {
       "name": "java",
@@ -226,259 +388,59 @@ github_pat_11ABCDEFG0123456789_abcdefghijklmnopqrstuvwxyz</pre>
     }
   ],
   "keywords": ["lock", "unlock"]
-}</pre>
-          <button class="copy-btn" type="button">Copy</button>
-        </div>
-      </figure>
-      <p>Here is what each part means:</p>
-      <ul>
-        <li>
-          <code>"name"</code> is the language as GitHub calls it, in lower
-          case. Scyros uses it to find repositories that contain the language,
-          and to choose how to read its code.
-        </li>
-        <li>
-          <code>"extensions"</code> says which files belong to the language:
-          files ending in <code>.java</code> are Java, files ending in
-          <code>.go</code> are Go.
-        </li>
-        <li>
-          The <code>"keywords"</code> inside a language only count in files of
-          that language. <code>go</code> starts a new task in Go, so it is only
-          searched for in Go files.
-        </li>
-        <li>
-          The <code>"keywords"</code> list at the end counts in every language.
-          <code>lock</code> and <code>unlock</code> are method names in both
-          Java and Go.
-        </li>
-      </ul>
-      <p>
-        A keyword matches whole words, and capital letters do not matter.
-        <code>Thread</code> therefore also matches a variable called
-        <code>thread</code>, but not <code>ThreadLocal</code>. Like any keyword
-        search, this finds some functions that do not really use concurrency.
-        The <a href="docs.html#keyword-files">keyword file reference</a> has
-        all the rules.
-      </p>
-      <p class="check">
-        <strong>Check:</strong> the file starts with <code>{</code> and ends
-        with <code>}</code>, and every quote and comma is in place. If a later
-        step says that it cannot parse the JSON file, compare your file with
-        the one above.
-      </p>
+}
+</pre>
+            <button class="copy-btn" type="button">Copy</button>
+          </div>
+        </figure>
+        <p>
+          Each language is now paired with a list of file extensions that Scyros will keep after downloading the repositories, and a list of keywords that will be used to filter the files. The top-level keywords (<code>lock</code> and <code>unlock</code>) are matched in every language. The output of this command is stored in <code>projects.csv</code> (per-repository statistics) and <code>files.csv</code> (per-file statistics).
+          Because this filter also matches comments and string literals, it
+          is deliberately permissive. A manual inspection of a random sample of the matching files helps assess the precision of the filter.
+        </p>
 
-      <h3 id="step-sample">3. Sample repositories</h3>
-      <div class="code">
-        <pre>scyros ids -t tokens.csv -n 2000 -o ids.csv</pre>
-        <button class="copy-btn" type="button">Copy</button>
-      </div>
-      <p>
-        Every repository on GitHub has a number, its id. Scyros picks random
-        ids and records the public repositories that come right after each one,
-        100 per request to GitHub, until it has 2,000. This gives a random
-        sample of GitHub, rather than only its popular projects. The result is
-        a table with one row per repository:
-      </p>
-      <figure class="file">
-        <figcaption>ids.csv, first rows</figcaption>
-        <div class="code code--scroll">
-          <pre>id,name,fork,request_number
-412873310,alice/chat-server,0,0
-412873318,bob/dotfiles,0,0
-412873325,carol/spring-petclinic,1,0</pre>
-        </div>
-      </figure>
-      <p>
-        <code>fork</code> is 1 when the repository is a copy of another one.
-        Scyros starts from the same random ids every time you run this
-        command, so the sample can be repeated. To draw a different sample, add
-        <code>-s</code> and any number, such as <code>-s 7</code>.
-      </p>
-      <p class="check">
-        <strong>Check:</strong> <code>ids.csv</code> has about 2,000 rows. You
-        can open it in a spreadsheet program, or count its lines in the
-        terminal. On macOS and Linux, type <code>wc -l ids.csv</code>. In
-        PowerShell, type <code>(Get-Content ids.csv).Count</code>. The count
-        includes the first line, which holds the column names.
-      </p>
 
-      <h3 id="step-clean">4. Remove duplicates and forks</h3>
-      <div class="code">
-        <pre>scyros duplicate_ids -i ids.csv -o unique_ids.csv
-scyros forks -i unique_ids.csv -o repos.csv</pre>
-        <button class="copy-btn" type="button">Copy</button>
-      </div>
-      <p>
-        Two random ids can be close enough to record the same repository
-        twice, so the first command keeps each repository once. Forks, such as
-        <code>carol/spring-petclinic</code> above, contain someone else's code.
-        Keeping them would count that code twice, so the second command
-        removes them.
-      </p>
-      <p class="check">
-        <strong>Check:</strong> each command prints how many rows it removed.
-        Duplicates are rare. Forks are not: in the
-        <a href="index.html#research">floating-point study</a>, about one
-        repository in three was a fork, so expect <code>repos.csv</code> to
-        hold about 1,300 repositories.
-      </p>
+    <h3 id="step-dedup">8. Remove duplicate files</h3>
 
-      <h3 id="step-metadata">5. Collect metadata and keep substantial repositories</h3>
-      <div class="code">
-        <pre>scyros metadata -i repos.csv -t tokens.csv -o metadata.csv</pre>
-        <button class="copy-btn" type="button">Copy</button>
-      </div>
-      <p>
-        Scyros asks GitHub about each repository: its main language, its size,
-        when it was created, and so on. This is the longest step, because it
-        sends one request per repository. Dates are written as Unix
-        timestamps, the number of seconds since 1 January 1970, and sizes are
-        in kB:
-      </p>
-      <figure class="file">
-        <figcaption>metadata.csv, first rows</figcaption>
-        <div class="code code--scroll">
-          <pre>id,name,language,created,pushed,updated,fork,disabled,archived,stars,forks,issues,has_issues,watchers_count,subscribers,size,license
-412873310,alice/chat-server,Go,1631015230,1712345678,1712345690,0,0,0,4,1,0,1,4,1,612,MIT License
-412873318,bob/dotfiles,Shell,1631015302,1633700000,1633700012,0,0,0,0,0,0,1,0,1,18,unknown</pre>
-        </div>
-      </figure>
-      <p>
-        Many repositories on GitHub are tiny, or were used for only a few
-        days. The next command keeps the substantial ones:
-      </p>
-      <div class="code">
-        <pre>scyros filter_metadata -i metadata.csv -s 50 -a 60 --non-code -o filtered.csv</pre>
-        <button class="copy-btn" type="button">Copy</button>
-      </div>
-      <ul>
-        <li><code>-s 50</code> keeps repositories of at least 50 kB. <code>bob/dotfiles</code> is dropped, since it is only 18 kB.</li>
-        <li><code>-a 60</code> keeps repositories with at least 60 days between their creation and the last time someone added code to them.</li>
-        <li><code>--non-code</code> drops repositories in which GitHub finds no programming language, such as those that only hold documents.</li>
-      </ul>
-      <p>
-        These limits only describe the repository itself. Stars and forks are
-        left out on purpose, because they would favour popular projects and
-        bias the sample. <code>filtered.csv</code> has the same columns as
-        <code>metadata.csv</code>, except that <code>created</code> and
-        <code>pushed</code> are replaced by <code>age</code>, the number of
-        days between them.
-      </p>
-      <p class="check">
-        <strong>Check:</strong> some rows of <code>metadata.csv</code> have a
-        name such as <code>http/2 404</code>. These repositories were deleted
-        or made private after you sampled them, and
-        <code>filter_metadata</code> drops them. Only about one repository in
-        ten passes the filters, so expect <code>filtered.csv</code> to hold
-        between 100 and 150 repositories.
-      </p>
+    <p>
+      Now that we have statistics at the repository level, we focus on files and functions. From this step on, files are
+      treated as a single pool, independent of their repository.
+      As shown by Lopes et al.</a> on <a href="https://doi.org/10.1145/3133908">their empirical study on code
+        duplication</a>, GitHub contains substantial cross-repository duplication, such as libraries, generated code and
+      code that users forget to gitignore (e.g., <code>node_modules</code>).
+      These files end up being overrepresented in file- and function-level statistics. Scyros provides a command to
+      deduplicate files across repositories.
+      With the flag
+      <code>-s bow</code> (bag of words), two files are duplicates when they
+      contain the same tokens with the same frequencies, regardless of
+      order and whitespace. <code>-s exact</code> requires byte-identical
+      files, and <code>-s overlap</code> also detects near-miss clones that
+      differ by a few statements, at a much higher cost.
+      <code>unique_files.csv</code> (the name is configurable with the <code>-o</code> flag) keeps one representative
+      per group, with
+      a <code>count</code> column giving the group size;
+      <code>duplicates.csv</code> (the name is configurable with the <code>-m</code> flag) maps each file to its
+      representative.
+      Feel free to try different deduplication strategies (although at this scale all three produce similar results).
+    </p>
+    <div class="code">
+      <pre>scyros duplicate_files -i files.csv -s bow -o unique_files.csv -m duplicates.csv</pre>
+      <button class="copy-btn" type="button">Copy</button>
+    </div>
 
-      <h3 id="step-languages">6. Keep the Java and Go repositories</h3>
-      <div class="code">
-        <pre>scyros languages -i filtered.csv -t tokens.csv -o languages.csv</pre>
-        <button class="copy-btn" type="button">Copy</button>
-      </div>
-      <p>
-        GitHub gives each repository one main language, but a Kotlin app may
-        also contain some Java. This command records every language in each
-        repository, with how many bytes of code it has. It also records the
-        latest commit, which identifies the exact version of the code that
-        step 7 downloads:
-      </p>
-      <figure class="file">
-        <figcaption>languages.csv, first rows</figcaption>
-        <div class="code code--scroll">
-          <pre>id,name,languages,latest_commit
-412873310,alice/chat-server,Go:80312;JavaScript:15420;Dockerfile:310,9f2c1a7e5b0d4c3a8e6f1b2d9c0a7e4f3b5d8c1a
-412873402,dan/budget-app,Kotlin:120344;Java:5120,4be81d0f2a6c9e3b7d5f1a8c0e2b4d6f8a1c3e5b</pre>
-        </div>
-      </figure>
-      <p>Then keep the repositories that contain at least one language from your keyword file:</p>
-      <div class="code">
-        <pre>scyros filter_languages -i languages.csv -l concurrency.json -o selected.csv</pre>
-        <button class="copy-btn" type="button">Copy</button>
-      </div>
-      <p class="check">
-        <strong>Check:</strong> both repositories above are kept. In the
-        floating-point study, about one repository in eight that passed step 5
-        contained Java or Go, mostly Java. Expect <code>selected.csv</code> to
-        hold around 15 repositories. If it holds none, see
-        <a href="#problems">If something goes wrong</a>.
-      </p>
-
-      <h3 id="step-download">7. Download the code</h3>
-      <div class="code">
-        <pre>scyros download -i selected.csv -t tokens.csv -k concurrency.json -d repos -p projects.csv -f files.csv</pre>
-        <button class="copy-btn" type="button">Copy</button>
-      </div>
-      <p>
-        Scyros downloads each repository into the folder <code>repos</code>, at
-        the commit recorded in step 6. Anyone who runs your study later
-        therefore gets exactly the same code. It then deletes every file that
-        is neither Java nor Go, and every file that contains none of your
-        keywords. <code>files.csv</code> lists the files that remain, with the
-        number of keyword matches in each, in a column named after your
-        keyword file:
-      </p>
-      <figure class="file">
-        <figcaption>files.csv, first rows, commits shortened</figcaption>
-        <div class="code code--scroll">
-          <pre>id,name,language,loc,words,concurrency.json
-412873310,repos/0/412873310-9f2c…/alice-chat-server-9f2c1a7/server/hub.go,go,88,301,6
-412873402,repos/0/412873402-4be8…/dan-budget-app-4be81d0/app/sync/Uploader.java,java,64,212,3</pre>
-        </div>
-      </figure>
-      <p>
-        <code>loc</code> is the number of lines and <code>words</code> the
-        number of words in the file. <code>projects.csv</code> has one row per
-        repository, with its numbers of files, lines and words before and
-        after the keyword filter.
-      </p>
-      <p class="check">
-        <strong>Check:</strong> the folder <code>repos</code> contains one
-        folder per repository, and you can open any of the files listed in
-        <code>files.csv</code> in a text editor.
-      </p>
-
-      <h3 id="step-dedup">8. Remove duplicate files</h3>
-      <div class="code">
-        <pre>scyros duplicate_files -i files.csv -s bow -o unique_files.csv -m duplicates.csv</pre>
-        <button class="copy-btn" type="button">Copy</button>
-      </div>
-      <p>
-        The same file often appears in several repositories, for example when
-        projects copy a library into their own code. Counting it every time
-        would distort your results. With <code>-s bow</code> ("bag of words"),
-        two files count as duplicates when they contain the same words, even
-        in a different order or with different spacing.
-        <code>unique_files.csv</code> keeps one file from each group, and adds
-        a <code>count</code> column with the number of copies.
-        <code>duplicates.csv</code> shows which file stands for each copy.
-      </p>
-      <p class="check">
-        <strong>Check:</strong> <code>unique_files.csv</code> has at most as
-        many rows as <code>files.csv</code>, and most files have a
-        <code>count</code> of 1.
-      </p>
-
-      <h3 id="step-parse">9. Extract the functions</h3>
-      <div class="code">
-        <pre>scyros parse -i unique_files.csv -k concurrency.json -o functions.csv -l function_logs.csv</pre>
-        <button class="copy-btn" type="button">Copy</button>
-      </div>
-      <p>
-        Scyros reads the code of each file, splits it into functions, and
-        keeps the functions that contain one of your keywords. This time it
-        skips comments and text in quotes, so a comment that mentions a lock
-        does not count. Each function is saved in its own file, next to the
-        file it comes from, in a folder ending in <code>.functions</code>. Its
-        name gives the line and column where the function starts:
-      </p>
-      <figure class="file">
-        <figcaption>repos/0/412873310-9f2c…/alice-chat-server-9f2c1a7/server/hub.go.functions/42-1</figcaption>
-        <div class="code code--scroll">
-          <pre>func broadcastAll(urls []string) []string {
+    <h3 id="step-parse">9. Extract the functions</h3>
+    The goal of our example study is to extract functions from GitHub that use concurrency primitives. To do this last step, Scyros provides a command to parse the files with Tree-sitter, extract their functions, and keep only those whose body contains at least one keyword. In this step, comments and string literals are not considered for keyword matching, so the filter is more precise than the file-level filter in step 7. Each function is written to its own file and a summary CSV file (in this case <code>functions.csv</code>) is produced with metrics for each function. This include their size, the number of occurrences of the keywords, which programming constructs they contain (loops, conditionals, function calls), etc... A summary CSV file at the file level (<code>function_logs.csv</code>) is also produced, giving the number of functions found and the number kept per file.
+    <div class="code">
+      <pre>scyros parse -i unique_files.csv -k config.json -o functions.csv -l function_logs.csv</pre>
+      <button class="copy-btn" type="button">Copy</button>
+    </div>
+    <p>
+      The function below is an example of a Go function that uses concurrency primitives and is extracted by Scyros. 
+    </p>
+    <figure class="file">
+      <figcaption>repos/0/412873310-9f2c…/alice-chat-server-9f2c1a7/server/hub.go.functions/42-1</figcaption>
+      <div class="code code--scroll">
+        <pre>func broadcastAll(urls []string) []string {
 	var wg sync.WaitGroup
 	results := make([]string, len(urls))
 	for i, url := range urls {
@@ -491,160 +453,35 @@ scyros forks -i unique_ids.csv -o repos.csv</pre>
 	wg.Wait()
 	return results
 }</pre>
-        </div>
-      </figure>
-      <p><code>functions.csv</code> describes every function that was kept, one per row:</p>
-      <figure class="file">
-        <figcaption>functions.csv, first rows, paths shortened</figcaption>
-        <div class="code code--scroll">
-          <pre>id,path,name,position,language,loc,words,concurrency.json,loop_statements,loop_nestings,if_statements,if_nestings,functions_calls,function_calls_nestings,params,param_kw_match,return_kw_match,parse_error
-412873310,…/server/hub.go.functions/42-1,broadcastAll,42:1,go,13,41,2,1,1,0,0,7,2,1,0,0,none
-412873402,…/app/sync/Uploader.java.functions/18-5,uploadAll,18:5,java,10,37,4,0,0,0,0,6,2,1,0,0,none</pre>
-        </div>
-      </figure>
-      <p>
-        The function above has 13 lines, 2 keyword matches (<code>WaitGroup</code>
-        and <code>go</code>), one loop, 7 calls and one parameter.
-        <code>function_logs.csv</code> has one row per file, with the number of
-        functions it contains and the number that were kept.
-      </p>
-      <p class="check">
-        <strong>Check:</strong> the <code>path</code> of each row in
-        <code>functions.csv</code> opens a file that contains exactly one
-        function.
-      </p>
-    </section>
-
-    <section aria-labelledby="results">
-      <h2 id="results">Your results</h2>
-      <p>Every file that the study wrote is still in the folder:</p>
-      <div class="code code--scroll">
-        <pre>concurrency-study/
-  tokens.csv          concurrency.json
-  ids.csv             unique_ids.csv       repos.csv
-  metadata.csv        filtered.csv
-  languages.csv       selected.csv
-  projects.csv        files.csv            repos/
-  unique_files.csv    duplicates.csv
-  functions.csv       function_logs.csv</pre>
       </div>
+    </figure>
+
+    </section>
       <p>
-        <code>functions.csv</code> is your dataset. Open it in a spreadsheet
-        program, or in the statistics software you prefer, and look for
-        patterns: how long are the functions that use concurrency, how often
-        do they contain loops, and how do Java and Go compare? The
-        <a href="docs.html#parse">reference</a> explains every column.
+    This is the end of this tutorial. For more information on the commands, their options and the format of the input and output files, please refer to the <a href="docs.html">documentation</a>. If you find a bug or would like to see a new feature implemented, please open an issue on <a href="https://github.com/fxpl/scyros/issues">GitHub</a>.
       </p>
+
+    </section>
+    </div>
+  </main>
+
+  <!-- #include footer -->
+  <footer class="site-foot">
+    <div class="wrap">
+      <nav aria-label="Project">
+        <a href="https://github.com/fxpl/scyros">GitHub</a>
+        <a href="https://crates.io/crates/scyros">crates.io</a>
+        <a href="tutorial.html">Tutorial</a>
+        <a href="https://github.com/fxpl/scyros/releases">Releases</a>
+      </nav>
       <p>
-        Because every intermediate file is kept, you can also go back: open
-        <code>filtered.csv</code> to see which repositories passed step 5, or
-        change a filter and run only the steps after it again.
+        Scyros is open-source software, licensed under
+        <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a> and developed at Uppsala University.
       </p>
-    </section>
-
-    <section aria-labelledby="problems">
-      <h2 id="problems">If something goes wrong</h2>
-      <dl class="fields">
-        <dt>"File … already exists. Use --force to override it."</dt>
-        <dd>
-          You have run this step before. To run it again, add
-          <code>--force</code> at the end of the command. The commands that
-          call GitHub (<code>ids</code>, <code>metadata</code>,
-          <code>languages</code> and <code>download</code>) do not show this
-          message: they continue where they stopped instead.
-        </dd>
-        <dt>A step stopped halfway, for example because your computer went to sleep</dt>
-        <dd>
-          Run the same command again. The commands that call GitHub continue
-          where they stopped. The others are quick enough to run again with
-          <code>--force</code>.
-        </dd>
-        <dt>"scyros: command not found", or "scyros is not recognised"</dt>
-        <dd>
-          Open a new terminal. If that does not help, install Scyros again
-          following the <a href="docs.html#install">instructions</a>.
-        </dd>
-        <dt>Errors about the token, or every repository fails</dt>
-        <dd>
-          Check that <code>tokens.csv</code> is plain text, that its first line
-          is exactly <code>token</code>, and that the token has not expired.
-        </dd>
-        <dt>A step cannot parse the JSON file</dt>
-        <dd>
-          Look for a missing comma, quote or bracket in
-          <code>concurrency.json</code>, or copy it again from step 2.
-        </dd>
-        <dt><code>selected.csv</code> is empty, or very small</dt>
-        <dd>
-          Random samples vary. Draw a larger one: run step 3 again with
-          <code>-n 5000 --force</code>, then every later step with
-          <code>--force</code>. Step 5 then sends about 3,300 requests, which
-          is still within the hourly limit of a token.
-        </dd>
-        <dt>GitHub's rate limit</dt>
-        <dd>
-          If you send too many requests, Scyros waits and tries again, so the
-          step only takes longer. Several tokens from the same account do not
-          raise the limit.
-        </dd>
-      </dl>
-    </section>
-
-    <section aria-labelledby="next">
-      <h2 id="next">Next steps</h2>
-      <ul>
-        <li>
-          <strong>Ask your own question.</strong> Change the languages and
-          keywords in the keyword file, and run the steps again. The
-          <a href="docs.html#keyword-files">keyword file reference</a> shows how
-          to use regular expressions, several keyword files at once, or no
-          keywords at all to keep every function.
-        </li>
-        <li>
-          <strong>Make the study larger.</strong> Increase <code>-n</code> in
-          step 3. The other commands stay the same. For large samples, spread
-          the work over several hours or several days: every step that calls
-          GitHub can be stopped and continued.
-        </li>
-        <li>
-          <strong>Look up an option.</strong> The <a href="docs.html">docs</a>
-          describe every subcommand, the files it reads and writes, and its
-          main options. <code class="cmd">scyros &lt;subcommand&gt; --help</code>
-          lists all of them.
-        </li>
-        <li>
-          <strong>Publish your study.</strong> Share your keyword file, your
-          commands and <code>ids.csv</code>, so that others can repeat it, and
-          please <a href="index.html#cite">cite Scyros</a>.
-        </li>
-      </ul>
-    </section>
-
-  </div>
-</main>
-
-<!-- #include footer -->
-<footer class="site-foot">
-  <div class="wrap">
-    <nav aria-label="Project">
-      <a href="https://github.com/fxpl/scyros">GitHub</a>
-      <a href="https://crates.io/crates/scyros">crates.io</a>
-      <a href="tutorial.html">Tutorial</a>
-      <a href="https://github.com/fxpl/scyros/releases">Releases</a>
-    </nav>
-    <p>
-      Scyros is open-source software, licensed under
-      <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a> and developed at Uppsala University.
-    </p>
-    <p class="site-foot__funding">
-      Co-funded by the European Union (ERC, HORNET, 101163629) and supported by
-      the Swedish Research Council, grants 2023-05161 and 2024-04565. Views and
-      opinions expressed are those of the authors only and do not necessarily
-      reflect those of the European Union or the European Research Council.
-    </p>
-  </div>
-</footer>
-<!-- /include -->
+    </div>
+  </footer>
+  <!-- /include -->
 
 </body>
+
 </html>
