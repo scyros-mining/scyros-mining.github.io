@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Docs · Scyros</title>
+<meta name="description" content="How to install Scyros and use its eleven subcommands: what each one reads, writes and accepts, and how to write keyword files.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/css/site.css">
+<script src="assets/js/site.js"></script>
+</head>
+<body>
+
+<!-- #include header current="docs" -->
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap site-head__inner">
+    <a class="brand" href="index.html">
+      <img src="assets/logo/neutral.svg" alt="" width="34" height="25">
+      <span>Scyros</span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="tutorial.html">Tutorial</a>
+      <a href="docs.html" aria-current="page">Docs</a>
+    </nav>
+    <div class="site-head__tools">
+      <button class="icon-button theme-toggle" type="button" aria-label="Switch colour theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <a class="icon-button" href="https://github.com/fxpl/scyros" aria-label="Scyros on GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48l-.01-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85l-.01 2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+<!-- /include -->
+
+<main id="main" class="wrap docs">
+
+  <nav class="docs__nav" aria-label="On this page">
+    <div>
+      <p class="docs__nav-title">On this page</p>
+      <ul>
+        <li><a href="#install">Installation</a></li>
+        <li><a href="#basics">Basics</a></li>
+        <li><a href="#tokens">GitHub tokens</a></li>
+        <li>
+          <a href="#subcommands">Subcommands</a>
+          <ul>
+            <li><a href="#ids"><code>ids</code></a></li>
+            <li><a href="#duplicate_ids"><code>duplicate_ids</code></a></li>
+            <li><a href="#forks"><code>forks</code></a></li>
+            <li><a href="#metadata"><code>metadata</code></a></li>
+            <li><a href="#filter_metadata"><code>filter_metadata</code></a></li>
+            <li><a href="#languages"><code>languages</code></a></li>
+            <li><a href="#filter_languages"><code>filter_languages</code></a></li>
+            <li><a href="#download"><code>download</code></a></li>
+            <li><a href="#duplicate_files"><code>duplicate_files</code></a></li>
+            <li><a href="#parse"><code>parse</code></a></li>
+            <li><a href="#pr"><code>pr</code></a></li>
+          </ul>
+        </li>
+        <li><a href="#keyword-files">Keyword files</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="docs__body">
+
+    <h1>Documentation</h1>
+    <p class="lead">
+      Installation, common behaviour, and a reference for every subcommand:
+      what it reads, writes and accepts. New to Scyros? Start with the
+      <a href="tutorial.html">tutorial</a>, which runs a complete study step by
+      step.
+    </p>
+
+    <!-- ============================================================ -->
+    <section aria-labelledby="install">
+      <h2 id="install">Installation</h2>
+      <p>
+        Scyros runs on macOS, Linux and Windows. The quickest way to install it
+        is the installer script for your system.
+      </p>
+
+      <h3>macOS and Linux</h3>
+      <div class="code">
+        <pre>curl --proto '=https' --tlsv1.2 -LsSf https://github.com/fxpl/scyros/releases/latest/download/scyros-installer.sh | sh</pre>
+        <button class="copy-btn" type="button">Copy</button>
+      </div>
+
+      <h3>Windows</h3>
+      <p>In PowerShell:</p>
+      <div class="code">
+        <pre>powershell -ExecutionPolicy Bypass -c "irm https://github.com/fxpl/scyros/releases/latest/download/scyros-installer.ps1 | iex"</pre>
+        <button class="copy-btn" type="button">Copy</button>
+      </div>
+
+      <h3>Cargo</h3>
+      <p>
+        Scyros is published on <a href="https://crates.io/crates/scyros">crates.io</a>
+        and requires Rust 1.93 or later.
+      </p>
+      <div class="code">
+        <pre>cargo install scyros</pre>
+        <button class="copy-btn" type="button">Copy</button>
+      </div>
+
+      <h3>Nix</h3>
+      <p>With flakes enabled:</p>
+      <div class="code">
+        <pre>nix profile install github:fxpl/scyros</pre>
+        <button class="copy-btn" type="button">Copy</button>
+      </div>
+
+      <h3>Prebuilt binaries</h3>
+      <p>
+        The <a href="https://github.com/fxpl/scyros/releases">releases page</a>
+        provides archives for macOS (Apple silicon and Intel), Linux (x86-64 and
+        ARM64) and Windows (x86-64, also as an MSI installer).
+      </p>
+
+      <h3>From source</h3>
+      <div class="code">
+        <pre>git clone https://github.com/fxpl/scyros.git
+cd scyros
+cargo build --release</pre>
+        <button class="copy-btn" type="button">Copy</button>
+      </div>
+      <p>The binary is written to <code>target/release/scyros</code>.</p>
+    </section>
+
+    <!-- ============================================================ -->
+    <section aria-labelledby="basics">
+      <h2 id="basics">Basics</h2>
+      <p>
+        A study is a chain of subcommands. Each subcommand reads a CSV file with
+        <code>-i</code> and writes a new one with <code>-o</code>, so every
+        intermediate result is a file that can be inspected, edited or shared. The <a href="#subcommands">reference</a>
+        lists the subcommands in the order a study usually runs them, as in the
+        <a href="tutorial.html">tutorial</a>.
+      </p>
+      <p>
+        Two subcommands differ: <code>ids</code> takes no input file, and
+        <code>download</code> writes its logs with <code>-f</code> and
+        <code>-p</code> instead of <code>-o</code>. Without <code>-o</code>, the
+        output file is named after the input file; each subcommand gives its
+        default output name.
+      </p>
+
+      <h3>Resuming and overwriting</h3>
+      <p>
+        Subcommands that query GitHub (<code>ids</code>, <code>metadata</code>,
+        <code>languages</code>, <code>download</code> and <code>pr</code>)
+        resume where they stopped when rerun with the same arguments. With
+        <code>--force</code>, they restart from the beginning instead.
+      </p>
+      <p>
+        All other subcommands refuse to overwrite an existing output file
+        unless <code>--force</code> is set. Most subcommands also accept
+        <code>-f</code> for <code>--force</code>, except <code>download</code>,
+        where <code>-f</code> sets the file log.
+      </p>
+
+      <h3>Random seeds</h3>
+      <p>
+        <code>ids</code> samples at random, and <code>metadata</code>,
+        <code>languages</code>, <code>download</code>, <code>parse</code> and
+        <code>pr</code> process their input in a random order. Each uses a
+        fixed default seed, listed in its options table, so a rerun gives the
+        same result. <code>-s</code> sets another seed. In
+        <code>filter_metadata</code> and <code>duplicate_files</code>,
+        <code>-s</code> is a different option.
+      </p>
+
+      <h3>Global options</h3>
+      <p>
+        Global options go before the subcommand, as in
+        <code class="cmd">scyros --debug parse …</code>.
+      </p>
+      <div class="table-wrap">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Option</th><th scope="col">Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>--debug</code></td><td>Prints debug messages and the causes of an error. With the environment variable <code>RUST_BACKTRACE=1</code>, also prints a stack trace.</td></tr>
+            <tr><td><code>-v</code>, <code>--version</code></td><td>Prints the version.</td></tr>
+            <tr><td><code>-h</code>, <code>--help</code></td><td>Prints help. After a subcommand, prints the help of that subcommand.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Getting help</h3>
+      <p>
+        This page lists every option of each subcommand.
+        <code class="cmd">scyros &lt;subcommand&gt; --help</code> describes
+        the options of the installed version.
+      </p>
+    </section>
+
+    <!-- ============================================================ -->
+    <section aria-labelledby="tokens">
+      <h2 id="tokens">GitHub tokens</h2>
+      <p>
+        Subcommands that query the GitHub API take a CSV file of
+        <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens">personal access tokens</a>
+        with <code>-t</code>. The file has a single column, <code>token</code>,
+        with one token per line:
+      </p>
+      <div class="code">
+        <pre>token
+ghp_first_token
+ghp_second_token</pre>
+      </div>
+      <p>
+        Create a fine-grained token with access to public repositories only.
+        Scyros only reads public data. The
+        <a href="tutorial.html#before">tutorial</a> describes the steps.
+      </p>
+      <p>
+        One token is enough. Tokens from the same account share a single rate
+        limit, so adding more does not speed up collection. Follow GitHub's
+        <a href="https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api">rate limits</a>
+        and <a href="https://docs.github.com/en/site-policy/github-terms/github-terms-of-service">terms of service</a>.
+      </p>
+      <p>Never commit or share the tokens file.</p>
+    </section>
+
+    <!-- ============================================================ -->
+    <section aria-labelledby="subcommands">
+      <h2 id="subcommands">Subcommands</h2>
+      <p>
+        The table below summarises all subcommands. File names follow the
+        <a href="tutorial.html">tutorial</a>.
+      </p>
+      <div class="table-wrap">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Subcommand</th><th scope="col">Purpose</th><th scope="col">Queries GitHub</th><th scope="col">Example input</th><th scope="col">Example output</th></tr></thead>
+          <tbody>
+            <tr><td><a href="#ids"><code>ids</code></a></td><td>Sample repositories</td><td>Yes</td><td>None</td><td><code>ids.csv</code></td></tr>
+            <tr><td><a href="#duplicate_ids"><code>duplicate_ids</code></a></td><td>Remove duplicate IDs</td><td>No</td><td><code>ids.csv</code></td><td><code>unique_ids.csv</code></td></tr>
+            <tr><td><a href="#forks"><code>forks</code></a></td><td>Remove forks</td><td>No</td><td><code>unique_ids.csv</code></td><td><code>ids_without_forks.csv</code></td></tr>
+            <tr><td><a href="#metadata"><code>metadata</code></a></td><td>Query repository metadata</td><td>Yes</td><td><code>ids_without_forks.csv</code></td><td><code>metadata.csv</code></td></tr>
+            <tr><td><a href="#filter_metadata"><code>filter_metadata</code></a></td><td>Filter by size, age and language</td><td>No</td><td><code>metadata.csv</code></td><td><code>filtered_metadata.csv</code></td></tr>
+            <tr><td><a href="#languages"><code>languages</code></a></td><td>Query languages and latest commit</td><td>Yes</td><td><code>filtered_metadata.csv</code></td><td><code>languages.csv</code></td></tr>
+            <tr><td><a href="#filter_languages"><code>filter_languages</code></a></td><td>Keep repositories in given languages</td><td>No</td><td><code>languages.csv</code></td><td><code>java_go_repos.csv</code></td></tr>
+            <tr><td><a href="#download"><code>download</code></a></td><td>Download code and keep matching files</td><td>Yes, unless <code>--skip</code></td><td><code>java_go_repos.csv</code></td><td><code>repos/</code>, <code>projects.csv</code>, <code>files.csv</code></td></tr>
+            <tr><td><a href="#duplicate_files"><code>duplicate_files</code></a></td><td>Remove duplicate files</td><td>No</td><td><code>files.csv</code></td><td><code>unique_files.csv</code>, <code>duplicates.csv</code></td></tr>
+            <tr><td><a href="#parse"><code>parse</code></a></td><td>Extract matching functions</td><td>No</td><td><code>unique_files.csv</code></td><td><code>functions.csv</code>, <code>function_logs.csv</code></td></tr>
+            <tr><td><a href="#pr"><code>pr</code></a></td><td>Collect pull requests</td><td>Yes</td><td><code>java_go_repos.csv</code></td><td><code>pull_requests.csv</code>, <code>pull_requests/</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        The options tables below omit <code>-i</code>, <code>-o</code> and
+        <code>--force</code>, which are described under <a href="#basics">Basics</a>.
+      </p>
+
+      <!-- ---------------------------------------------------------- -->
+      <h3 class="docs__group">Sampling</h3>
+
+      <h4 id="ids"><code>scyros ids</code></h4>
+      <p>
+        Samples public repositories at random. Each request starts from an ID
+        drawn uniformly at random, with replacement, and returns the next 100
+        public repositories. Sampling stops once <code>-n</code> repositories
+        are collected, rounded up to a multiple of 100.
+      </p>
+      <div class="code"><pre>scyros ids -t tokens.csv -n 2000 -o ids.csv</pre></div>
+      <p class="ref-label"><strong>Input:</strong> none, apart from the tokens file.</p>
+      <p class="ref-label"><strong>Output:</strong> one row per repository. No default name: <code>-o</code> is required. If the file exists, new rows are appended to it.</p>
+      <div class="table-wrap">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Column</th><th scope="col">Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>id</code></td><td>Repository ID.</td></tr>
+            <tr><td><code>name</code></td><td>Full name, <code>owner/repository</code>.</td></tr>
+            <tr><td><code>fork</code></td><td>1 if the repository is a fork, 0 otherwise.</td></tr>
+            <tr><td><code>request_number</code></td><td>Request that returned the repository. Used to resume.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="ref-label"><strong>Options</strong></p>
+      <div class="table-wrap">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Option</th><th scope="col">Description</th><th scope="col">Default</th></tr></thead>
+          <tbody>
+            <tr><td><code>-t</code></td><td>Tokens file.</td><td>Required</td></tr>
+            <tr><td><code>-o</code></td><td>Output file.</td><td>Required</td></tr>
+            <tr><td><code>-n</code></td><td>Number of repositories to collect.</td><td>Unlimited: runs until stopped</td></tr>
+            <tr><td><code>-s</code></td><td>Random seed.</td><td><code>11372246557183969657</code></td></tr>
+            <tr><td><code>--mode</code></td><td><code>random</code>, or <code>linear</code> to collect repositories in increasing ID order. In linear mode, sampling stops at <code>--max</code>, or earlier if no repository has a higher ID.</td><td><code>random</code></td></tr>
+            <tr><td><code>--min</code></td><td>Smallest ID to sample from.</td><td><code>0</code></td></tr>
+            <tr><td><code>--max</code></td><td>Largest ID to sample from.</td><td><code>1128315983</code>, a repository created on 5 January 2026</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4 id="duplicate_ids"><code>scyros duplicate_ids</code></h4>
+      <p>
+        Removes rows with a repository ID that already appeared, which sampling
+        with replacement can produce, and prints the number of duplicates.
+      </p>
+      <div class="code"><pre>scyros duplicate_ids -i ids.csv -o unique_ids.csv</pre></div>
+      <p class="ref-label"><strong>Input:</strong> any CSV file with an <code>id</code> column.</p>
+      <p class="ref-label"><strong>Output:</strong> the same columns as the input. Default name: <code><em>input</em>.unique.csv</code>.</p>
+      <p class="ref-label"><strong>Options</strong></p>
+      <div class="table-wrap">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Option</th><th scope="col">Description</th><th scope="col">Default</th></tr></thead>
+          <tbody>
+            <tr><td><code>-c</code></td><td>Column to compare.</td><td><code>id</code></td></tr>
+            <tr><td><code>--no-output</code></td><td>Prints the number of duplicates without writing an output file.</td><td>Off</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4 id="forks"><code>scyros forks</code></h4>
+      <p>
+        Removes forks. A fork duplicates the code of its parent repository, so
+        keeping forks biases every later count.
+      </p>
+      <div class="code"><pre>scyros forks -i unique_ids.csv -o ids_without_forks.csv</pre></div>
+      <p class="ref-label"><strong>Input:</strong> a CSV file with a <code>fork</code> column holding 1 or 0, such as the output of <code>ids</code>. Rows without a value are reported as errors.</p>
+      <p class="ref-label"><strong>Output:</strong> the same columns as the input. Default name: <code><em>input</em>.non-forks.csv</code>.</p>
+      <p class="ref-label"><strong>Options</strong></p>
+      <div class="table-wrap">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Option</th><th scope="col">Description</th><th scope="col">Default</th></tr></thead>
+          <tbody>
+            <tr><td><code>--column</code></td><td>Column that marks forks.</td><td><code>fork</code></td></tr>
+            <tr><td><code>--no-output</code></td><td>Prints the number of forks without writing an output file.</td><td>Off</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ---------------------------------------------------------- -->
+      <h3 class="docs__group">Metadata</h3>
+
+      <h4 id="metadata"><code>scyros metadata</code></h4>
+      <p>
+        Queries the GitHub API for the metadata of each repository, with one
+        request per repository, in random order.
+      </p>
+      <div class="code"><pre>scyros metadata -i ids_without_forks.csv -t tokens.csv -o metadata.csv</pre></div>
+      <p class="ref-label"><strong>Input:</strong> a CSV file with <code>id</code> and <code>name</code> columns.</p>
+      <p class="ref-label"><strong>Output:</strong> one row per repository. Default name: <code><em>input</em>.metadata.csv</code>.</p>
+      <div class="table-wrap">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Column</th><th scope="col">Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>id</code></td><td>Repository ID.</td></tr>
+            <tr><td><code>name</code></td><td>Full name. If the repository could not be queried, the error instead: the HTTP status, such as <code>http/2 404</code> for a repository deleted or made private, or a message starting with <code>error:</code>, such as a network error.</td></tr>
+            <tr><td><code>language</code></td><td>Primary language according to GitHub. Empty if none.</td></tr>
+            <tr><td><code>created</code>, <code>pushed</code>, <code>updated</code></td><td>Creation, last push and last update, as Unix timestamps in seconds.</td></tr>
+            <tr><td><code>fork</code>, <code>disabled</code>, <code>archived</code></td><td>1 or 0.</td></tr>
+            <tr><td><code>stars</code>, <code>forks</code>, <code>issues</code></td><td>Number of stars, forks and open issues.</td></tr>
+            <tr><td><code>has_issues</code></td><td>1 if issues are enabled, 0 otherwise.</td></tr>
+            <tr><td><code>watchers_count</code>, <code>subscribers</code></td><td>Number of watchers and subscribers.</td></tr>
+            <tr><td><code>size</code></td><td>Size in kB.</td></tr>
+            <tr><td><code>license</code></td><td>Licence name, or <code>unknown</code>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="ref-label"><strong>Options</strong></p>
+      <div class="table-wrap">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Option</th><th scope="col">Description</th><th scope="col">Default</th></tr></thead>
+          <tbody>
+            <tr><td><code>-t</code></td><td>Tokens file.</td><td>Required</td></tr>
+            <tr><td><code>-c</code></td><td>Output of an earlier run. Repositories already in it are not queried again.</td><td>None</td></tr>
+            <tr><td><code>--sub</code></td><td>Processes only this many randomly chosen repositories.</td><td>All repositories</td></tr>
+            <tr><td><code>--ids</code>, <code>--names</code></td><td>Input columns to read instead of <code>id</code> and <code>name</code>.</td><td><code>id</code>, <code>name</code></td></tr>
+            <tr><td><code>-s</code></td><td>Random seed for the processing order.</td><td><code>2955615809866670875</code></td></tr>
+            <tr><td><code>-n</code>, <code>--threads</code></td><td>Number of requests sent to the GitHub API at the same time. With more than one, rows are written in the order in which the requests complete.</td><td><code>1</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4 id="filter_metadata"><code>scyros filter_metadata</code></h4>
+      <p>
+        Keeps the repositories that meet thresholds on size, age and language.
+        Popularity metrics such as stars and forks are deliberately not
+        available as filters, because they bias the sample towards popular
+        projects. Rows with an error instead of a name are always removed. Runs
+        locally and sends no requests.
+      </p>
+      <div class="code"><pre>scyros filter_metadata -i metadata.csv -s 50 -a 60 --non-code -o filtered_metadata.csv</pre></div>
+      <p class="ref-label"><strong>Input:</strong> the output of <code>metadata</code>.</p>
+      <p class="ref-label"><strong>Output:</strong> the same columns as the input, except that <code>created</code> and <code>pushed</code> are replaced by <code>age</code>, the number of days between them. A negative age, caused by a wrong clock on the machine that pushed, is set to 0. Default name: <code><em>input</em>.filtered.csv</code>.</p>
+      <p class="ref-label"><strong>Options</strong></p>
+      <div class="table-wrap">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Option</th><th scope="col">Description</th><th scope="col">Default</th></tr></thead>
+          <tbody>
+            <tr><td><code>-s</code></td><td>Minimum size in kB. Smaller repositories are removed.</td><td><code>0</code></td></tr>
+            <tr><td><code>-a</code></td><td>Minimum age in days, measured from creation to last push. Younger repositories are removed.</td><td><code>0</code></td></tr>
+            <tr><td><code>--non-code</code></td><td>Removes repositories without a primary language, such as those holding only documentation.</td><td>Off</td></tr>
+            <tr><td><code>-d</code></td><td>Removes disabled repositories.</td><td>Off</td></tr>
+            <tr><td><code>--no-output</code></td><td>Prints statistics without writing an output file.</td><td>Off</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ---------------------------------------------------------- -->
+      <h3 class="docs__group">Languages</h3>
+
+      <h4 id="languages"><code>scyros languages</code></h4>
+      <p>
+        Queries the GitHub API for the language breakdown of each repository and
+        the SHA of its latest commit. <code>download</code> uses this SHA to
+        fetch a fixed version of the code, which makes downloads reproducible.
+      </p>
+      <div class="code"><pre>scyros languages -i filtered_metadata.csv -t tokens.csv -o languages.csv</pre></div>
+      <p class="ref-label"><strong>Input:</strong> a CSV file with <code>id</code> and <code>name</code> columns.</p>
+      <p class="ref-label"><strong>Output:</strong> one row per repository. Default name: <code><em>input</em>.languages.csv</code>.</p>
+      <div class="table-wrap">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Column</th><th scope="col">Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>id</code></td><td>Repository ID.</td></tr>
+            <tr><td><code>name</code></td><td>Full name, or an error as in <a href="#metadata"><code>metadata</code></a> if the repository could not be queried.</td></tr>
+            <tr><td><code>languages</code></td><td>Each language with its size in bytes, such as <code>Go:80312;Shell:1022</code>.</td></tr>
+            <tr><td><code>latest_commit</code></td><td>SHA of the latest commit.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="ref-label"><strong>Options</strong></p>
+      <div class="table-wrap">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Option</th><th scope="col">Description</th><th scope="col">Default</th></tr></thead>
+          <tbody>
+            <tr><td><code>-t</code></td><td>Tokens file.</td><td>Required</td></tr>
+            <tr><td><code>-c</code></td><td>Output of an earlier run. Repositories already in it are not queried again.</td><td>None</td></tr>
+            <tr><td><code>--sub</code></td><td>Processes only this many randomly chosen repositories.</td><td>All repositories</td></tr>
+            <tr><td><code>--ids</code>, <code>--names</code></td><td>Input columns to read instead of <code>id</code> and <code>name</code>.</td><td><code>id</code>, <code>name</code></td></tr>
+            <tr><td><code>-s</code></td><td>Random seed for the processing order.</td><td><code>2955615809866670875</code></td></tr>
+            <tr><td><code>-n</code>, <code>--threads</code></td><td>Number of repositories queried at the same time. With more than one, rows are written in the order in which the queries complete.</td><td><code>1</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4 id="filter_languages"><code>scyros filter_languages</code></h4>
+      <p>
+        Keeps the repositories that contain at least one language listed in a
+        <a href="#keyword-files">keyword file</a>, and removes repositories that
+        are no longer accessible. Language names are case-insensitive.
+      </p>
+      <div class="code"><pre>scyros filter_languages -i languages.csv -l config.json -o java_go_repos.csv</pre></div>
+      <p class="ref-label"><strong>Input:</strong> the output of <code>languages</code>, and a keyword file.</p>
+      <p class="ref-label"><strong>Output:</strong> the same columns as the input. Default name: <code><em>input</em>.filtered_lang.csv</code>.</p>
+      <p class="ref-label"><strong>Options</strong></p>
+      <div class="table-wrap">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Option</th><th scope="col">Description</th><th scope="col">Default</th></tr></thead>
+          <tbody>
+            <tr><td><code>-l</code></td><td>Keyword file, or a <a href="#keyword-short-form">plain list of languages</a>.</td><td>Required</td></tr>
+            <tr><td><code>--no-output</code></td><td>Runs the filter without writing an output file.</td><td>Off</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ---------------------------------------------------------- -->
+      <h3 class="docs__group">Source code</h3>
+
+      <h4 id="download"><code>scyros download</code></h4>
+      <p>
+        Downloads each repository at its recorded commit. It then deletes every
+        file whose extension is not listed in the
+        <a href="#keyword-files">keyword files</a>, and every file that contains
+        no keyword. Keywords are matched anywhere in a file, including comments
+        and string literals.
+      </p>
+      <p>
+        With <code>--skip</code>, <code>download</code> works on repositories
+        already on disk instead of downloading them, and needs no tokens.
+      </p>
+      <div class="code"><pre>scyros download -i java_go_repos.csv -t tokens.csv -k config.json -d repos -p projects.csv -f files.csv</pre></div>
+      <p class="ref-label"><strong>Input:</strong> a CSV file with <code>id</code>, <code>name</code> and <code>latest_commit</code> columns, such as the output of <code>filter_languages</code>. With <code>--skip</code>, a <code>path</code> column instead of <code>latest_commit</code>.</p>
+      <p class="ref-label"><strong>Output:</strong> the downloaded files, a file log and a project log. The file log (<code>-f</code>) has one row per file kept.</p>
+      <div class="table-wrap">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Column</th><th scope="col">Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>id</code></td><td>Repository ID.</td></tr>
+            <tr><td><code>name</code></td><td>Path of the file.</td></tr>
+            <tr><td><code>language</code></td><td>Language of the file, from its extension and the keyword files.</td></tr>
+            <tr><td><code>loc</code>, <code>words</code></td><td>Number of lines and words.</td></tr>
+            <tr><td><em>keyword file</em></td><td>Number of keyword matches. One column per keyword file, named after its path as given on the command line.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="ref-label">The project log (<code>-p</code>) has one row per repository. Repositories that GitHub does not provide, such as deleted ones, and archives that cannot be extracted are logged as error rows.</p>
+      <div class="table-wrap">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Column</th><th scope="col">Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>id</code></td><td>Repository ID.</td></tr>
+            <tr><td><code>path</code></td><td>Local directory of the repository, or an error if the download failed.</td></tr>
+            <tr><td><code>name</code></td><td>Full name, <code>owner/repository</code>.</td></tr>
+            <tr><td><code>latest_commit</code></td><td>SHA of the downloaded commit.</td></tr>
+            <tr><td><code>files</code>, <code>loc</code>, <code>words</code></td><td>Number of files, lines and words before the keyword filter.</td></tr>
+            <tr><td><code>files_with_kw</code>, <code>loc_with_kw</code>, <code>words_with_kw</code></td><td>The same, for the files that match at least one keyword file.</td></tr>
+            <tr><td><code>files_with_<em>k</em></code>, <code>loc_of_files_with_<em>k</em></code>, <code>words_of_files_with_<em>k</em></code></td><td>The same, for the files that match keyword file <em>k</em>. One set of columns per keyword file.</td></tr>
+            <tr><td><em>keyword file</em></td><td>Number of keyword matches. One column per keyword file.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="ref-label"><strong>Options</strong></p>
+      <div class="table-wrap">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Option</th><th scope="col">Description</th><th scope="col">Default</th></tr></thead>
+          <tbody>
+            <tr><td><code>-k</code></td><td>One or more keyword files.</td><td>Required</td></tr>
+            <tr><td><code>-d</code></td><td>Directory to download into.</td><td>Required</td></tr>
+            <tr><td><code>-t</code></td><td>Tokens file.</td><td>Required unless <code>--skip</code> is set</td></tr>
+            <tr><td><code>-f</code></td><td>File log.</td><td><code><em>input</em>.file_log.csv</code></td></tr>
+            <tr><td><code>-p</code></td><td>Project log. A rerun without <code>--force</code> resumes from it.</td><td><code><em>input</em>.project_log.csv</code></td></tr>
+            <tr><td><code>--force</code></td><td>Overwrites the logs and starts again. No short form, since <code>-f</code> is the file log.</td><td>Off</td></tr>
+            <tr><td><code>--skip</code></td><td>Works on repositories already on disk, listed in a <code>path</code> column, instead of downloading them.</td><td>Off</td></tr>
+            <tr><td><code>-n</code></td><td>Number of threads. Only with <code>--skip</code>.</td><td><code>1</code></td></tr>
+            <tr><td><code>--count</code></td><td>Computes statistics without deleting any file.</td><td>Off</td></tr>
+            <tr><td><code>--regex</code></td><td>Reads keywords as <a href="#keyword-matching">regular expressions</a>.</td><td>Off</td></tr>
+            <tr><td><code>--case-sensitive</code></td><td>Makes keyword matching case-sensitive.</td><td>Off</td></tr>
+            <tr><td><code>--sub</code></td><td>Processes only this many randomly chosen repositories.</td><td>All repositories</td></tr>
+            <tr><td><code>--order</code></td><td>Processing order: <code>random</code> or <code>sequential</code> (the order of the input file).</td><td><code>random</code></td></tr>
+            <tr><td><code>-s</code></td><td>Random seed for the processing order.</td><td><code>12393566520031723923</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4 id="duplicate_files"><code>scyros duplicate_files</code></h4>
+      <p>
+        Removes duplicate files, keeping one representative per group. Three
+        strategies are available:
+      </p>
+      <dl class="fields">
+        <dt><code>exact</code></dt>
+        <dd>Byte-identical files.</dd>
+        <dt><code>bow</code></dt>
+        <dd>Bag of words: the same tokens with the same frequencies, regardless of order and whitespace.</dd>
+        <dt><code>overlap</code></dt>
+        <dd>A large share of tokens in common. Also detects files that differ by a few statements, but is much slower.</dd>
+      </dl>
+      <p>
+        <code>exact</code> and <code>bow</code> hash every file, so their cost
+        grows linearly with the number of files. <code>overlap</code> compares
+        files with one another, using the prefix filtering of SourcererCC to
+        limit the number of comparisons. Two files are duplicates under
+        <code>overlap</code> when the tokens they share reach
+        <code>--threshold</code> times the token count of the longer file; a
+        threshold of 1.0 requires the same tokens with the same frequencies.
+        Files are only compared with files of the same language, given by the
+        keyword files passed with <code>-l</code>: files whose extension is in
+        none of them are left uncompared, and without <code>-l</code> every
+        file is compared with every other.
+      </p>
+      <p>
+        Files larger than 1 GiB are ignored. Empty files form one group under
+        <code>exact</code> and <code>bow</code>, and are each reported as
+        unique under <code>overlap</code>.
+      </p>
+      <div class="code"><pre>scyros duplicate_files -i files.csv -s bow -o unique_files.csv -m duplicates.csv</pre></div>
+      <p class="ref-label"><strong>Input:</strong> a CSV file with a column of file paths (<code>name</code> by default), such as the file log of <code>download</code>.</p>
+      <p class="ref-label"><strong>Output:</strong> the same columns as the input, plus <code>count</code>, the number of files in the group. Default name: <code><em>input</em>.unique.csv</code>.</p>
+      <p class="docs__output">The map (<code>-m</code>) has two columns: <code>name</code> (or the column given with <code>--header</code>), a file, and <code>original</code>, the representative of its group.</p>
+      <p class="ref-label"><strong>Options</strong></p>
+      <div class="table-wrap">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Option</th><th scope="col">Description</th><th scope="col">Default</th></tr></thead>
+          <tbody>
+            <tr><td><code>-s</code></td><td>Strategy: <code>exact</code>, <code>bow</code> or <code>overlap</code>.</td><td><code>exact</code></td></tr>
+            <tr><td><code>-m</code></td><td>Map of duplicates.</td><td><code><em>input</em>.duplicates_map.csv</code></td></tr>
+            <tr><td><code>-l</code></td><td>One or more keyword files, used only for their extensions and language names. Only used by <code>overlap</code>, which compares files within a language.</td><td>None: all files are compared</td></tr>
+            <tr><td><code>--threshold</code></td><td>With <code>overlap</code>, the share of tokens two files must have in common.</td><td><code>0.8</code></td></tr>
+            <tr><td><code>-p</code></td><td>With <code>overlap</code>, maximum prefix depth. A deeper prefix rejects more candidates before comparing them in full. Only changes the running time, not the duplicates found.</td><td><code>1</code></td></tr>
+            <tr><td><code>-n</code></td><td>Number of threads.</td><td><code>1</code></td></tr>
+            <tr><td><code>--header</code></td><td>Column of file paths.</td><td><code>name</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4 id="parse"><code>scyros parse</code></h4>
+      <p>
+        Parses each file with Tree-sitter and keeps the functions whose body
+        contains at least one keyword. Comments and string literals are ignored.
+        Each function is saved in its own file, named after its start line and
+        column (such as <code>42-1</code>), in a directory named after its source
+        file with <code>.functions</code> appended.
+      </p>
+      <p>
+        Supported languages: C, C++, C#, Fortran, Go, Java, Python, Rust, Scala
+        and TypeScript. The language of a file is given by its extension, as
+        defined in the keyword files. Files in other languages are skipped with
+        a warning.
+      </p>
+      <div class="code"><pre>scyros parse -i unique_files.csv -k config.json -o functions.csv -l function_logs.csv</pre></div>
+      <p class="ref-label"><strong>Input:</strong> a CSV file with <code>id</code> and <code>name</code> (file path) columns, such as the output of <code>duplicate_files</code>.</p>
+      <p class="ref-label"><strong>Output:</strong> one row per function kept. Default name: <code><em>input</em>.functions.csv</code>.</p>
+      <div class="table-wrap">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Column</th><th scope="col">Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>id</code></td><td>Repository ID.</td></tr>
+            <tr><td><code>path</code></td><td>Source file of the function.</td></tr>
+            <tr><td><code>name</code></td><td>Function name.</td></tr>
+            <tr><td><code>position</code></td><td>Start line and column in the source file, such as <code>42:1</code>.</td></tr>
+            <tr><td><code>language</code></td><td>Language of the source file.</td></tr>
+            <tr><td><code>loc</code>, <code>words</code></td><td>Number of lines and words.</td></tr>
+            <tr><td><em>keyword file</em></td><td>Number of keyword matches. One column per keyword file, named after its path as given on the command line.</td></tr>
+            <tr><td><code>loop_statements</code>, <code>loop_nestings</code></td><td>Number of loops and their nesting depth.</td></tr>
+            <tr><td><code>if_statements</code>, <code>if_nestings</code></td><td>Number of conditionals and their nesting depth.</td></tr>
+            <tr><td><code>functions_calls</code>, <code>function_calls_nestings</code></td><td>Number of function calls and their nesting depth.</td></tr>
+            <tr><td><code>params</code></td><td>Number of parameters.</td></tr>
+            <tr><td><code>param_kw_match</code></td><td>Number of parameters whose type matches a keyword.</td></tr>
+            <tr><td><code>return_kw_match</code></td><td>1 if the return type matches a keyword, 0 otherwise.</td></tr>
+            <tr><td><code>parse_error</code></td><td>Position of the first parse error, relative to the function, or <code>none</code>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="docs__output">The log (<code>-l</code>) has one row per file: <code>id</code>, <code>name</code>, <code>language</code>, <code>functions</code> (functions found), <code>functions_with_kw</code> (functions kept), one column per keyword file with the number of functions kept that match it, and <code>parse_error</code> (position of the first parse error in the file, <code>none</code> or <code>not-found</code>).</p>
+      <p class="ref-label"><strong>Options</strong></p>
+      <div class="table-wrap">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Option</th><th scope="col">Description</th><th scope="col">Default</th></tr></thead>
+          <tbody>
+            <tr><td><code>-k</code></td><td>One or more keyword files.</td><td>Required</td></tr>
+            <tr><td><code>-l</code></td><td>Log file, with one row per file.</td><td><code><em>input</em>.function_logs.csv</code></td></tr>
+            <tr><td><code>--count</code></td><td>Computes statistics without saving the functions.</td><td>Off</td></tr>
+            <tr><td><code>--lambdas</code></td><td>Also extracts anonymous functions.</td><td>Off</td></tr>
+            <tr><td><code>--ignore-comments</code></td><td>Also removes comments from the saved functions. Comments are always ignored when matching keywords.</td><td>Off</td></tr>
+            <tr><td><code>--regex</code></td><td>Reads keywords as <a href="#keyword-matching">regular expressions</a>.</td><td>Off</td></tr>
+            <tr><td><code>--case-sensitive</code></td><td>Makes keyword matching case-sensitive.</td><td>Off</td></tr>
+            <tr><td><code>--failures</code></td><td>Handling of code that does not parse: <code>ignore</code>, <code>skip-file</code>, <code>skip-function</code> or <code>abort</code>. Skipped files and functions get -1 in every column.</td><td><code>ignore</code></td></tr>
+            <tr><td><code>-n</code></td><td>Number of threads.</td><td><code>1</code></td></tr>
+            <tr><td><code>-s</code></td><td>Random seed for the processing order.</td><td><code>8155495201244430235</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ---------------------------------------------------------- -->
+      <h3 class="docs__group">Pull requests</h3>
+
+      <h4 id="pr"><code>scyros pr</code></h4>
+      <p>
+        Collects the open, closed and merged pull requests of each repository.
+        The discussion and review comments of each pull request are saved in a
+        separate CSV file. This subcommand is not part of the pipeline in the
+        tutorial; it accepts any list of repositories.
+      </p>
+      <div class="code"><pre>scyros pr -i java_go_repos.csv -t tokens.csv -d pull_requests -o pull_requests.csv</pre></div>
+      <p class="ref-label"><strong>Input:</strong> a CSV file with <code>id</code> and <code>name</code> columns.</p>
+      <p class="ref-label"><strong>Output:</strong> one row per pull request. Default name: <code><em>input</em>.pulls.csv</code>.</p>
+      <div class="table-wrap">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Column</th><th scope="col">Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>id</code>, <code>name</code></td><td>Repository ID and full name.</td></tr>
+            <tr><td><code>pr_number</code></td><td>Pull request number.</td></tr>
+            <tr><td><code>file_path</code></td><td>CSV file holding its comments.</td></tr>
+            <tr><td><code>user</code>, <code>user_id</code></td><td>Login and GitHub user ID of the author.</td></tr>
+            <tr><td><code>created_at</code>, <code>updated_at</code></td><td>Timestamps of creation and last update.</td></tr>
+            <tr><td><code>closed_at</code>, <code>merged_at</code></td><td>Timestamps, or 0 if not closed or merged.</td></tr>
+            <tr><td><code>draft</code></td><td>1 if it is a draft, 0 otherwise.</td></tr>
+            <tr><td><code>state</code></td><td>State, such as <code>open</code> or <code>closed</code>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="docs__output">Each comments file holds the body of the pull request, its discussion comments, code review comments and review summaries, with the columns <code>id</code> (comment ID), <code>user</code>, <code>user_id</code>, <code>type</code> (<code>body</code>, <code>discussion</code>, <code>code</code>, <code>review</code> or <code>error</code>), <code>created_at</code> and <code>body</code> (the text).</p>
+      <p class="ref-label"><strong>Options</strong></p>
+      <div class="table-wrap">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Option</th><th scope="col">Description</th><th scope="col">Default</th></tr></thead>
+          <tbody>
+            <tr><td><code>-t</code></td><td>Tokens file.</td><td>Required</td></tr>
+            <tr><td><code>-d</code></td><td>Directory for the comments files.</td><td>Required</td></tr>
+            <tr><td><code>--sub</code></td><td>Processes only this many randomly chosen repositories.</td><td>All repositories</td></tr>
+            <tr><td><code>--ids</code>, <code>--names</code></td><td>Input columns to read instead of <code>id</code> and <code>name</code>.</td><td><code>id</code>, <code>name</code></td></tr>
+            <tr><td><code>-s</code></td><td>Random seed for the processing order.</td><td><code>9990520807055774474</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <section aria-labelledby="keyword-files">
+      <h2 id="keyword-files">Keyword files</h2>
+      <p>
+        A keyword file is a JSON file that lists the languages of a study and,
+        optionally, the keywords to search for. It is read by
+        <code>filter_languages</code> (<code>-l</code>), <code>download</code>
+        (<code>-k</code>), <code>parse</code> (<code>-k</code>) and
+        <code>duplicate_files</code> with <code>-s overlap</code>
+        (<code>-l</code>).
+      </p>
+
+      <h3>Format</h3>
+      <figure class="file">
+        <figcaption>config.json</figcaption>
+        <div class="code code--scroll">
+          <pre>{
+  "languages": [
+    {
+      "name": "java",
+      "extensions": [".java"],
+      "keywords": ["synchronized", "volatile", "Thread"]
+    },
+    {
+      "name": "go",
+      "extensions": [".go"],
+      "keywords": ["go", "chan", "WaitGroup"]
+    }
+  ],
+  "keywords": ["lock", "unlock"]
+}</pre>
+        </div>
+      </figure>
+      <p>The top-level object has two fields:</p>
+      <dl class="fields">
+        <dt><code>languages</code></dt>
+        <dd>
+          Required. A list with one entry per language. Each entry has the
+          following fields:
+          <dl class="fields">
+            <dt><code>name</code></dt>
+            <dd>Required. The language name as GitHub reports it, such as <code>Java</code>, <code>Go</code>, <code>C++</code> or <code>C#</code>. Case-insensitive.</dd>
+            <dt><code>extensions</code></dt>
+            <dd>Optional. File extensions of the language, with or without the leading dot.</dd>
+            <dt><code>keywords</code></dt>
+            <dd>Optional. Keywords that only apply to files of this language.</dd>
+          </dl>
+        </dd>
+        <dt><code>keywords</code></dt>
+        <dd>Optional. Keywords that apply to every language.</dd>
+      </dl>
+      <p>
+        <code>filter_languages</code> compares each name with the languages
+        GitHub reports. <code>parse</code> uses it to select a parser.
+      </p>
+
+      <h3 id="keyword-matching">Matching rules</h3>
+      <ul>
+        <li>
+          By default, keywords match whole words and are case-insensitive:
+          <code>Thread</code> matches <code>Thread</code> and
+          <code>thread</code>, but not <code>Threads</code> or
+          <code>ThreadLocal</code>. <code>--case-sensitive</code> makes matching
+          case-sensitive.
+        </li>
+        <li>
+          Extensions are always case-sensitive: <code>.c</code> does not match
+          <code>main.C</code>.
+        </li>
+        <li>
+          <code>download</code> matches keywords anywhere in a file, including
+          comments and string literals. <code>parse</code> ignores comments and
+          string literals.
+        </li>
+        <li>
+          A language with no keywords, neither its own nor top-level, keeps all
+          its files and functions. Use this to study all the code of a language.
+        </li>
+        <li>
+          With <code>--regex</code>, each keyword is a case-insensitive regular
+          expression and does not need to match a whole word. Use
+          <code>\b</code> for word boundaries, and escape backslashes in JSON:
+          <code>"\\bAtomic\\w+"</code> matches <code>AtomicInteger</code> and
+          <code>AtomicLong</code>.
+        </li>
+      </ul>
+
+      <h3>Multiple keyword files</h3>
+      <p>
+        <code>download</code> and <code>parse</code> accept multiple keyword
+        files after <code>-k</code>. Each file produces its own column of
+        matches, named after its path as given on the command line, so
+        categories of keywords can be counted separately. A file or function is
+        kept if it matches any of the keyword files. All keyword files must
+        assign each extension to the same language.
+      </p>
+      <div class="code">
+        <pre>scyros parse -i unique_files.csv -k threads.json locks.json -o functions.csv</pre>
+      </div>
+
+      <h3 id="keyword-short-form">Short form for <code>filter_languages</code></h3>
+      <p>
+        <code>filter_languages</code> only reads language names, so it also
+        accepts a plain list:
+      </p>
+      <figure class="file">
+        <figcaption>languages.json</figcaption>
+        <div class="code">
+          <pre>{ "languages": ["java", "go"] }</pre>
+        </div>
+      </figure>
+    </section>
+
+  </div>
+</main>
+
+<!-- #include footer -->
+<footer class="site-foot">
+  <div class="wrap">
+    <nav aria-label="Project">
+      <a href="https://github.com/fxpl/scyros">GitHub</a>
+      <a href="https://crates.io/crates/scyros">crates.io</a>
+      <a href="https://github.com/fxpl/scyros/releases">Releases</a>
+    </nav>
+    <p>
+      Scyros is open-source software, licensed under
+      <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a> and developed at Uppsala University.
+    </p>
+  </div>
+</footer>
+<!-- /include -->
+
+</body>
+</html>
